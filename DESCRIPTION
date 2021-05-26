@@ -1,11 +1,14 @@
 Package: compassutils
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Utility functions to plot and work with COMPASS output
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Miguel Julio Rodo
+Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
+Description: Initially it only has the function plot_compass, 
+    which plots posterior probabilities for each cytokine combination
+	using more concise alternatives to the COMPASS::plot function's grid. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 2.10)
