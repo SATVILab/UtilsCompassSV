@@ -31,3 +31,12 @@ library(compassutils)
 data('c_obj', package = compassutils)
 plot_compass(c_obj = c_obj)
 ```
+
+You can convert cytokine combination formats between standard “+/-”
+format and COMPASS “\!&” format.
+
+``` r
+library(compassutils)
+data('c_obj', package = compassutils)
+plot_compass(c_obj = c_obj)
+```

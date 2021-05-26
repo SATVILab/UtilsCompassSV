@@ -4,11 +4,25 @@ Title: Utility functions to plot and work with COMPASS output
 Version: 0.1.0
 Author: Miguel Julio Rodo
 Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
-Description: Initially it only has the function plot_compass, 
+Description: Primary function thus far is plot_compass, 
     which plots posterior probabilities for each cytokine combination
 	using more concise alternatives to the COMPASS::plot function's grid. 
+	Also has `convert_cyt_combn_format`, for converting between "standard" and COMPASS
+	cytokine combination formats. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 2.10)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    purrr,
+    magrittr,
+    stringr,
+    tibble,
+    rlang,
+    tidyr,
+    cowplot
+RoxygenNote: 7.1.1

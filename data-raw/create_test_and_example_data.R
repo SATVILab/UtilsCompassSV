@@ -5,10 +5,11 @@ if(!require('cytofacs')){
 
 # individual output
 c_obj <- cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p1
+usethis::use_data(c_obj, overwrite = TRUE)
 
 # list
-c_obj_list <- list("cd4" = list("p1" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p1,
-                                "mtb" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$mtb),
-                   "cd8" = list("p1" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p1,
-                                "ebv" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$ebv,
-                                "p4" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p4))
+c_obj_list <- list("p1" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p1,
+                   "mtb" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$mtb,
+                   "ebv" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$ebv,
+                   "p4" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p4)
+usethis::use_data(c_obj_list, overwrite = TRUE)
