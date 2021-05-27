@@ -2,7 +2,7 @@
 #'
 #' @param c_obj object of class 'COMPASSResult', or a list of such objects. Provides
 #' COMPASS data to plot.
-#' @param dir_save_base character. Where to save the output. Default is working directory.
+#' @param dir_save character. Where to save the output. Default is working directory.
 #' @param save logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.
 #' @param prob_min,quant_min [0,1]. Specify the minimum probability of a response for the minimum quantile
 #' of samples that a cytokine combination must have to be included. For example,
@@ -14,7 +14,7 @@
 #' If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Default is \code{NULL}.
 #' @param silent logical. If \code{TRUE}, then any warnings that would have been otherwise given
 #' are not. Default is \code{FALSE}.
-#' @param plot_prob_shift [0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
+#' @param shift_plot_grid [0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
 #' the probability plot further to the right. Maximum value is 1 (at which point the plot will
 #' effectively be pushed off the plotting surface). Useful to increase to a value such as 0.01
 #' if the cytokine names are long and push the labelling grid too far to the right. Tweak as required.
@@ -28,6 +28,8 @@
 #' group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved.
 #' If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},
 #' then both the facted and individual plots are saved.
+#' @param file character. Name of saved plot. If \code{NULL}, then
+#' set to `compass_boxplots`.
 #'
 #' @param return_plot logical. If \code{TRUE}, then plot output is returned.
 
@@ -41,12 +43,13 @@
 #'
 #' @importFrom rlang !! ensym
 #' @import ggplot2
-plot_compass <- function(c_obj, dir_save_base = getwd(),
+plot_compass <- function(c_obj, dir_save = getwd(),
                          save = TRUE, save_format = 'png',
                          prob_min = 0.8, quant_min = 0.25,
                          silent = FALSE, cyt_order = NULL,
+                         file = NULL,
                          plot_prob_fill = NULL,
-                         plot_prob_shift = 0,
+                         shift_plot_grid = 0,
                          return_plot = TRUE,
                          facet = TRUE){
 
@@ -271,15 +274,19 @@ plot_compass <- function(c_obj, dir_save_base = getwd(),
       cowplot::draw_plot(plot = p_probs[[i]], y = 0.3,
                          height = 0.7, x = width * (i-1), width = width) +
       cowplot::draw_plot(p_grid, y = 0, height = 0.3,
-                         x = plot_prob_shift * width + width * (i-1),
-                         width = width - plot_prob_shift * width)
-    # cowplot::ggsave2(filename = file.path(dir_save_base, paste0(names(p_probs)[i], ".png")),
+                         x = shift_plot_grid * width + width * (i-1),
+                         width = width - shift_plot_grid * width)
+    # cowplot::ggsave2(filename = file.path(dir_save, paste0(names(p_probs)[i], ".png")),
     #                  plot = p,
     #                  units = 'cm', width = 29.4, height = 29 * 9/16 * 0.9)
   }
 
   if(save){
-    cowplot::ggsave2(filename = file.path(dir_save_base, 'compass_boxplots.png'),
+    cowplot::ggsave2(filename = file.path(dir_save,
+                                          paste0(
+                                            ifelse(is.null(file), 'compass_boxplots', file), '.', save_format
+                                            )
+                                          ),
                      plot = p,
                      units = 'cm', width = 29.4, height = 29 * 9/16 * 0.9)
   }

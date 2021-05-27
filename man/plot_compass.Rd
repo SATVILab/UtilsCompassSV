@@ -6,15 +6,16 @@
 \usage{
 plot_compass(
   c_obj,
-  dir_save_base = getwd(),
+  dir_save = getwd(),
   save = TRUE,
   save_format = "png",
   prob_min = 0.8,
   quant_min = 0.25,
   silent = FALSE,
   cyt_order = NULL,
+  file = NULL,
   plot_prob_fill = NULL,
-  plot_prob_shift = 0,
+  shift_plot_grid = 0,
   return_plot = TRUE,
   facet = TRUE
 )
@@ -23,7 +24,7 @@ plot_compass(
 \item{c_obj}{object of class 'COMPASSResult', or a list of such objects. Provides
 COMPASS data to plot.}
 
-\item{dir_save_base}{character. Where to save the output. Default is working directory.}
+\item{dir_save}{character. Where to save the output. Default is working directory.}
 
 \item{save}{logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.}
 
@@ -42,12 +43,15 @@ are not. Default is \code{FALSE}.}
 vertically along the annotation grid is given by this vector (with first element going at the bottom).
 If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Default is \code{NULL}.}
 
+\item{file}{character. Name of saved plot. If \code{NULL}, then
+set to `compass_boxplots`.}
+
 \item{plot_prob_fill}{character. If a colour, then the boxplots are filled according
 to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
 
-\item{plot_prob_shift}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
+\item{shift_plot_grid}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
 the probability plot further to the right. Maximum value is 1 (at which point the plot will
 effectively be pushed off the plotting surface). Useful to increase to a value such as 0.01
 if the cytokine names are long and push the labelling grid too far to the right. Tweak as required.
