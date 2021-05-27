@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of compassutils is to supply useful plotting and/or utility functions for working with output from COMPASS. 
+The goal of compassutils is to supply useful plotting and utility functions for working with output from COMPASS. 
 
 ## Installation
 
@@ -31,18 +31,29 @@ devtools::install_github("SATVILab/compassutils.git")
 
 ## Example
 
-You can create a box- and dot-plot(s) of posterior probabilities for individual cytokine combinations (more concise than `COMPASS::plot` heatmap):
+### Plots
 
-```{r example, eval = FALSE}
+You can create a box- and dot-plot(s) of posterior probabilities for individual cytokine combinations. These are more concise than standard `COMPASS` heatmaps and automatically force the same cytokine combinations to be present and cytokines in the same order for all "groups" plotted together. 
+
+```{r example-plot_compass}
 library(compassutils)
-data('c_obj', package = compassutils)
-plot_compass(c_obj = c_obj)
+data('c_obj_list', package = 'compassutils')
+plot_compass(c_obj = c_obj_list[c(1,3)], save = FALSE, 
+             shift_plot_grid = 0.063)
 ```
 
+### Utilities
+
 You can convert cytokine combination formats between standard "+/-" format and COMPASS "!&" format. 
-```{r , eval = FALSE}
-library(compassutils)
-data('c_obj', package = compassutils)
-plot_compass(c_obj = c_obj)
+```{r , results = 'asis'}
+cyt_combn_vec_compass <- c("IFNg&!IL2&TNF&IL6&!IL22",
+                           "IFNg&IL2&TNF&IL6&IL22",
+                           "!IFNg&!IL2&!TNF&!IL6&!IL22")
+cyt_combn_vec_std <- compassutils::convert_cyt_combn_format(cyt_combn_vec_compass, 
+                                                            to = 'std')
+pander::pandoc.table(tibble::tibble(
+  `COMPASS format` = cyt_combn_vec_compass, 
+  `Standard format` = cyt_combn_vec_std 
+  ))
 ```
 
