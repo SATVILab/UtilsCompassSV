@@ -61,8 +61,8 @@
 #' @param return_plot_list logical. If \code{TRUE}, then a named list of the plots used to create the figure are returned. The
 #' first element is \code{'p_grid'} for the cytokine grid plot. The second element is \code{'p_probs'}  for
 #' a list of the posterior probability plots. The third element is named \code{'p_scores'}, and has sub-elements that
-#' are the plots of the PFS and FS responses for each group. The \code{'p_scores'} element is only supplied if \code{'scores' %in% type}.
-
+#' are the plots of the PFS and FS responses for each group. The \code{'p_scores'} element is only supplied if \code{'scores'} is
+#' in \code{'type'}.
 #'
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
@@ -73,24 +73,29 @@
 #'
 #' @importFrom rlang !! ensym
 #' @import ggplot2
-plot_compass <- function(c_obj, dir_save = getwd(),
-                         type = c('pp', 'scores'),
-                         save = TRUE, save_format = 'png',
-                         prob_min = 0.8, quant_min = 0.25,
-                         silent = FALSE, cyt_order = NULL,
-                         file = NULL,
-                         plot_prob_fill = NULL,
-                         shift_plot_grid_x = 0,
-                         shift_plot_scores_y = c(0,0),
-                         shift_plot_pp_y = 0,
-                         shift_label = c(0.05, -0.04),
-                         prop_pp = c(0.7, 0.7),
-                         label = TRUE,
-                         return_plot_list = TRUE,
-                         facet = FALSE,
-                         n_col = NULL,
-                         height = NULL,
-                         width = NULL){
+plot_compass <- function(
+  c_obj,
+  dir_save = getwd(),
+  type = c('pp', 'scores'),
+  save = TRUE,
+  save_format = 'png',
+  prob_min = 0.8,
+  quant_min = 0.25,
+  silent = FALSE,
+  cyt_order = NULL,
+  file = NULL,
+  plot_prob_fill = NULL,
+  shift_plot_grid_x = 0,
+  shift_plot_scores_y = c(0,0),
+  shift_plot_pp_y = 0,
+  shift_label = c(0.05, -0.04),
+  prop_pp = c(0.7, 0.7),
+  label = TRUE,
+  return_plot_list = TRUE,
+  facet = FALSE,
+  n_col = NULL,
+  height = NULL,
+  width = NULL){
 
   # prep
   # -------------------

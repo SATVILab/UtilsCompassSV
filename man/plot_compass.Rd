@@ -98,6 +98,12 @@ elements in \code{c_obj} are used as labels for sub-figures.
 If \code{c_obj} is not a list, then no label is printed, regardless of the
 value of \code{label}. Default is \code{TRUE}.}
 
+\item{return_plot_list}{logical. If \code{TRUE}, then a named list of the plots used to create the figure are returned. The
+first element is \code{'p_grid'} for the cytokine grid plot. The second element is \code{'p_probs'}  for
+a list of the posterior probability plots. The third element is named \code{'p_scores'}, and has sub-elements that
+are the plots of the PFS and FS responses for each group. The \code{'p_scores'} element is only supplied if \code{'scores'} is
+in \code{'type'}.}
+
 \item{facet}{logical vector. Whether to facet or save individual plots for each
 group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved.
 If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},

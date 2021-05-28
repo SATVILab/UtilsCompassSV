@@ -16,7 +16,7 @@
     if(!is.character(plot_prob_fill)){
       stop("plot_prob_fill must be of type character if not NULL")
     }
-    return(plot_prob_fil)
+    return(plot_prob_fill)
   }
 
   if(is.null(.grp)) stop(".grp must be specified if plot_prob_fill not a named character vector")
