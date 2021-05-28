@@ -36,16 +36,17 @@ library(compassutils)
 data('c_obj_list', package = 'compassutils')
 plot_compass(
   c_obj = c_obj_list, 
+  dir_save = here::here('data-raw'),
   type = c('pp', 'scores'),
   return_plot_list = FALSE, 
   shift_plot_scores = c(-0.05, 0.05), 
   shift_plot_pp_y = -0.075, 
   shift_plot_grid_x = 0.052
   )
-knitr::include_graphics('compass_boxplots.png')
+knitr::include_graphics('data-raw/compass_boxplots.png')
 ```
 
-<img src="compass_boxplots.png" width="100%" />
+<img src="data-raw/compass_boxplots.png" width="100%" />
 
 ### Utilities
 
