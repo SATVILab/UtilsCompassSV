@@ -1,5 +1,9 @@
 #' @title Plot COMPASS output
 #'
+#' @description  Plot COMPASS posterior probabilities as boxplots, and the PFS scores if desired.
+#' A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
+#' y-axis scales and cytokine combinations displayed fixed across plots.
+#'
 #' @param c_obj object of class 'COMPASSResult', or a list of such objects. Provides
 #' COMPASS data to plot.
 #' @param dir_save character. Where to save the output. Default is working directory.
@@ -63,13 +67,41 @@
 #' a list of the posterior probability plots. The third element is named \code{'p_scores'}, and has sub-elements that
 #' are the plots of the PFS and FS responses for each group. The \code{'p_scores'} element is only supplied if \code{'scores'} is
 #' in \code{'type'}.
-#'
+#' @param cyt_lab function. A function that takes the cytokine names as input and returns the
+#' value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
+#' it is supplied when creating the grid plot to the \code{scale_y_continuous} function
+#' via the \code{labels} parameter. For example, if we have two cytokines, \code{"IFNg"} and
+#' \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
+#' set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
+#' This will change the label for \code{"IFNg"} but leave all the others as is.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
 #'
 #' @examples
-#' plot_compass(c_obj)
+#' library(compassutils)
+#' data('c_obj_list', package = 'compassutils')
+#' plot_compass(
+#' c_obj = c_obj_list,
+#' type = c('pp', 'scores'),
+#' return_plot_list = FALSE,
+#' shift_plot_scores = c(-0.05, 0.05),
+#' shift_plot_pp_y = -0.075,
+#' shift_plot_grid_x = 0.052
+#' )
+#' The plot will then be saved to the working directory.
+#'
+#' Can also use Greek symbols for cytokines:
+#' get_cyt_lab <- function(cyt){
+#'   lapply(cyt, function(cyt_ind){
+#'   switch(cyt_ind,
+#'   "IFNg" = bquote('IFN'~gamma),
+#'   cyt_ind)
+#'   })
+#'  }
+#'  plot_compass(c_obj_list[1], type = c('pp'),
+#'  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+#'  shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
 #'
 #' @importFrom rlang !! ensym
 #' @import ggplot2
@@ -95,7 +127,8 @@ plot_compass <- function(
   facet = FALSE,
   n_col = NULL,
   height = NULL,
-  width = NULL){
+  width = NULL,
+  cyt_lab = NULL){
 
   # prep
   # -------------------
@@ -134,7 +167,8 @@ plot_compass <- function(
     p_list_pp <- .plot_compass_pp(
       c_obj = c_obj, dir_save = dir_save, prob_min = prob_min,
       quant_min = quant_min, silent = silent, cyt_order = cyt_order,
-      plot_prob_fill = plot_prob_fill, facet = facet
+      plot_prob_fill = plot_prob_fill, facet = facet,
+      cyt_lab = cyt_lab
     )
   }
   scores_ind <- 'scores' %in% type
@@ -303,7 +337,8 @@ plot_compass <- function(
 #' and the heat map of the corresponding cytokine combination
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
-                             silent, cyt_order, plot_prob_fill, facet){
+                             silent, cyt_order, plot_prob_fill, facet,
+                             cyt_lab){
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i){
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -436,6 +471,17 @@ plot_compass <- function(
           axis.ticks.x = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_blank())
+
+  if(!is.null(cyt_lab)){
+    p_grid_orig <- p_grid
+    p_grid <- try(p_grid +
+      scale_y_discrete(labels = cyt_lab))
+    if(identical(class(p_grid), 'try-error')){
+      warning("Using cyt_lab created an error. Creating cytokine grid plot without it.")
+      p_grid <- p_grid_orig
+    }
+    rm(list = 'p_grid_orig')
+  }
 
 
   p_probs <- purrr::map(seq_along(c_obj), function(i){

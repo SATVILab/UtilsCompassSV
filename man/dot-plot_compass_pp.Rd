@@ -12,7 +12,8 @@
   silent,
   cyt_order,
   plot_prob_fill,
-  facet
+  facet,
+  cyt_lab
 )
 }
 \arguments{
@@ -48,6 +49,14 @@ accordingly.  Otherwise, boxplots are filled according to names of lower-most li
 group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved.
 If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},
 then both the facted and individual plots are saved.}
+
+\item{cyt_lab}{function. A function that takes the cytokine names as input and returns the
+value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
+it is supplied when creating the grid plot to the \code{scale_y_continuous} function
+via the \code{labels} parameter. For example, if we have two cytokines, \code{"IFNg"} and
+\code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
+set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
+This will change the label for \code{"IFNg"} but leave all the others as is.}
 }
 \value{
 A named list with names 'p_probs' and 'p_grid',

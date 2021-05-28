@@ -26,7 +26,8 @@ plot_compass(
   facet = FALSE,
   n_col = NULL,
   height = NULL,
-  width = NULL
+  width = NULL,
+  cyt_lab = NULL
 )
 }
 \arguments{
@@ -111,14 +112,46 @@ then both the facted and individual plots are saved.}
 
 \item{height, width}{numeric. Height and width, respectively (of course), of the saved figure (if saved). If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
+
+\item{cyt_lab}{function. A function that takes the cytokine names as input and returns the
+value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
+it is supplied when creating the grid plot to the \code{scale_y_continuous} function
+via the \code{labels} parameter. For example, if we have two cytokines, \code{"IFNg"} and
+\code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
+set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
+This will change the label for \code{"IFNg"} but leave all the others as is.}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.
 }
 \description{
-Plot COMPASS output
+Plot COMPASS posterior probabilities as boxplots, and the PFS scores if desired.
+A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
+y-axis scales and cytokine combinations displayed fixed across plots.
 }
 \examples{
-plot_compass(c_obj)
+library(compassutils)
+data('c_obj_list', package = 'compassutils')
+plot_compass(
+c_obj = c_obj_list,
+type = c('pp', 'scores'),
+return_plot_list = FALSE,
+shift_plot_scores = c(-0.05, 0.05),
+shift_plot_pp_y = -0.075,
+shift_plot_grid_x = 0.052
+)
+The plot will then be saved to the working directory.
+
+Can also use Greek symbols for cytokines:
+get_cyt_lab <- function(cyt){
+  lapply(cyt, function(cyt_ind){
+  switch(cyt_ind,
+  "IFNg" = bquote('IFN'~gamma),
+  cyt_ind)
+  })
+ }
+ plot_compass(c_obj_list[1], type = c('pp'),
+ return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+ shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
 
 }
