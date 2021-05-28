@@ -12,7 +12,7 @@ functions for working with output from COMPASS.
 
 ## Installation
 
-You can install the latest version of computils from
+You can install the latest version of compassutils from
 [GitHub](https://www.github.com) with
 
 ``` r
@@ -24,20 +24,28 @@ devtools::install_github("SATVILab/compassutils.git")
 
 ### Plots
 
-You can create a box- and dot-plot(s) of posterior probabilities for
-individual cytokine combinations. These are more concise than standard
-`COMPASS` heatmaps and automatically force the same cytokine
-combinations to be present and cytokines in the same order for all
-“groups” plotted together.
+You can create boxplots of posterior probabilities for individual
+cytokine combinations, as well as the PFS and FS responses. These are
+more concise than standard `COMPASS` heatmaps and automatically force
+the same cytokine combinations to be present and cytokines in the same
+order for all “groups” plotted together. Note that the PFS and FS scores
+plot need not be added.
 
 ``` r
 library(compassutils)
 data('c_obj_list', package = 'compassutils')
-plot_compass(c_obj = c_obj_list[c(1,3)], save = FALSE, 
-             shift_plot_grid = 0.063)
+plot_compass(
+  c_obj = c_obj_list, 
+  type = c('pp', 'scores'),
+  return_plot_list = FALSE, 
+  shift_plot_scores = c(-0.05, 0.05), 
+  shift_plot_pp_y = -0.075, 
+  shift_plot_grid_x = 0.052
+  )
+knitr::include_graphics('compass_boxplots.png')
 ```
 
-<img src="man/figures/README-example-plot_compass-1.png" width="100%" />
+<img src="compass_boxplots.png" width="100%" />
 
 ### Utilities
 

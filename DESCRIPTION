@@ -24,5 +24,7 @@ Imports:
     tibble,
     rlang,
     tidyr,
-    cowplot
+    cowplot,
+    COMPASS,
+    RColorBrewer
 RoxygenNote: 7.1.1

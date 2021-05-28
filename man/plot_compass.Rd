@@ -7,6 +7,7 @@
 plot_compass(
   c_obj,
   dir_save = getwd(),
+  type = c("pp", "scores"),
   save = TRUE,
   save_format = "png",
   prob_min = 0.8,
@@ -15,9 +16,17 @@ plot_compass(
   cyt_order = NULL,
   file = NULL,
   plot_prob_fill = NULL,
-  shift_plot_grid = 0,
-  return_plot = TRUE,
-  facet = TRUE
+  shift_plot_grid_x = 0,
+  shift_plot_scores_y = c(0, 0),
+  shift_plot_pp_y = 0,
+  shift_label = c(0.05, -0.04),
+  prop_pp = c(0.7, 0.7),
+  label = TRUE,
+  return_plot_list = TRUE,
+  facet = FALSE,
+  n_col = NULL,
+  height = NULL,
+  width = NULL
 )
 }
 \arguments{
@@ -25,6 +34,11 @@ plot_compass(
 COMPASS data to plot.}
 
 \item{dir_save}{character. Where to save the output. Default is working directory.}
+
+\item{type}{'pp' and/or 'scores'. Specifies response type(s) to plot.
+If 'pp' is included, then posterior probabilities of individual cytokine combinations are plotted.
+If 'scores' is included, then the PFS and FS responses are included. Note that, at this stage,
+'pp' needs to be included, and so is added even if missing from \code{type}. Default is \code{c('pp', 'scores')}.}
 
 \item{save}{logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.}
 
@@ -51,18 +65,46 @@ to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
 
-\item{shift_plot_grid}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
+\item{shift_plot_grid_x}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
 the probability plot further to the right. Maximum value is 1 (at which point the plot will
 effectively be pushed off the plotting surface). Useful to increase to a value such as 0.01
 if the cytokine names are long and push the labelling grid too far to the right. Tweak as required.
 Default is \code{0}.}
 
-\item{return_plot}{logical. If \code{TRUE}, then plot output is returned.}
+\item{shift_plot_scores_y}{numeric vector of length two, restricted to [-1,1]. Specifies the amount to
+squeeze the scores plot in. The first element controls the bottom position of the plot,
+and the second the top. For both elements, a positive value means moving upwards. A value of zero corresponds no shift.
+Typically the bottom element and top element should both be shifted down (and therefore have negative values).
+Only applies if type includes both \code{'pp'} and \code{'scores'}.
+Default is \code{c(0,0)}.}
+
+\item{shift_plot_pp_y}{[0,1]. Specifies amount by which to shift the upper point of the probability plot upwards.
+Positive values make it larger. Typically you want to shift this down, if anything, so use negative values.
+Default is 0.}
+
+\item{shift_label}{numeric vector, values in \code{[0,1]}. Specifies amount by which to shift
+the labels of the plot (if used). Default is \code{c(0.05, -0.04)}.}
+
+\item{prop_pp}{numeric vector, values in \code{[0,1]}. Specifies coordinate-wise the proportion of plot region
+for a single group in \code{c_obj} (if \code{c_obj} is a list; otherwise it's simply the proportion of the
+plot) that is devoted (before applying \code{shift_plot_pp_y}) to the plot of posterior probabilities.
+The first element is the proportion allocated to the probability plot along the x-axis, and (\code{1-prop_pp[1]}) is
+then the space allocated to the scores plot. The first element is set equal to 0 if there is no scores plot.
+The second element is the proportion allocate to the probabilty plot along the y-axis, and (\code{1-prop_pp[1]}) is
+then the space allocated to the cytokine indicator grid.}
+
+\item{label}{logical. If \code{TRUE} and \code{c_obj} is a list, then the names of
+elements in \code{c_obj} are used as labels for sub-figures.
+If \code{c_obj} is not a list, then no label is printed, regardless of the
+value of \code{label}. Default is \code{TRUE}.}
 
 \item{facet}{logical vector. Whether to facet or save individual plots for each
 group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved.
 If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},
 then both the facted and individual plots are saved.}
+
+\item{height, width}{numeric. Height and width, respectively (of course), of the saved figure (if saved). If
+\code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.

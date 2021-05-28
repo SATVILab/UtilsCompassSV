@@ -12,5 +12,6 @@ c_obj_list <- list("p1" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_c
                    "mtb" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$mtb,
                    "ebv" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$ebv,
                    "p4" = cytofacs::cd4_th1_il17_il22_il6$compass$locb0.15_min_clust$p4) %>%
-  setNames(c("Secreted Mtb proteins", "Mtb auxotroph", "EBV/CMV", "Non-secreted Mtb proteins"))
+  setNames(c("Secreted Mtb proteins", "Live Mtb", "EBV/CMV", "Non-secreted Mtb proteins")) %>%
+  magrittr::extract(c(2, 1, 4, 3))
 usethis::use_data(c_obj_list, overwrite = TRUE)
