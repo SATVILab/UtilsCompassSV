@@ -47,6 +47,10 @@
 #' @param shift_plot_pp_y [0,1]. Specifies amount by which to shift the upper point of the probability plot upwards.
 #' Positive values make it larger. Typically you want to shift this down, if anything, so use negative values.
 #' Default is 0.
+#' @param boxplot_width_pp,boxplot_width_scores numeric. If not \code{NULL}, then supplied to \code{width} parameter of
+#' \code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
+#' to force the widths of the boxplots to be constant across elements in \code{c_obj}.
+#' Default is \code{NULL}.
 #' @param label logical. If \code{TRUE} and \code{c_obj} is a list, then the names of
 #' elements in \code{c_obj} are used as labels for sub-figures.
 #' If \code{c_obj} is not a list, then no label is printed, regardless of the
@@ -125,6 +129,8 @@ plot_compass <- function(
   save_format = 'png',
   prob_min = 0.8,
   quant_min = 0.25,
+  boxplot_width_scores = NULL,
+  boxplot_width_pp = NULL,
   silent = FALSE,
   cyt_order = NULL,
   file_grid = NULL,
@@ -184,6 +190,7 @@ plot_compass <- function(
     p_list_pp <- .plot_compass_pp(
       c_obj = c_obj, dir_save = dir_save, prob_min = prob_min,
       quant_min = quant_min, silent = silent, cyt_order = cyt_order,
+      boxplot_width = boxplot_width_pp,
       plot_prob_fill = plot_prob_fill, facet = facet,
       cyt_lab = cyt_lab
     )
@@ -192,6 +199,7 @@ plot_compass <- function(
   if(scores_ind){
     p_list_scores <- .plot_compass_scores(
       c_obj = c_obj,
+      boxplot_width = boxplot_width_scores,
       plot_prob_fill = plot_prob_fill
       )
   } else p_list_scores <- NULL

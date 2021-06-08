@@ -9,7 +9,9 @@
 #' @return A named list with names set to the names
 #' of \code{c_obj}, where each element is the corresponding
 #' boxplot of PFS and FS scores.
-.plot_compass_scores <- function(c_obj, plot_prob_fill){
+.plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
+                                 boxplot_width_pp = boxplot_width_pp,
+                                 boxplot_width_scores = boxplot_width_scores){
 
   # prep
   score_tbl <- purrr::map_df(seq_along(c_obj), function(i){
@@ -34,7 +36,8 @@
     ggplot(score_tbl %>%
              dplyr::filter(.grp == .grp_curr),
            aes(x = score_type, y = score, fill = .grp)) +
-      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50') +
+      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50',
+                   width = boxplot_width) +
       cowplot::theme_cowplot() +
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
@@ -57,7 +60,7 @@
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab){
+                             cyt_lab, boxplot_width){
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i){
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -210,7 +213,8 @@
                 aes(x = combn, y = prob, fill = .grp)) +
       cowplot::theme_cowplot() +
       cowplot::background_grid(major = 'y') +
-      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50') +
+      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50',
+                   width = boxplot_width) +
       scale_fill_manual(values = col_vec_grp) +
       lims(y = c(0,1)) +
       theme(axis.text.x = element_text(angle = 90),

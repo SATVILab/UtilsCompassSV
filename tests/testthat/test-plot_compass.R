@@ -34,7 +34,16 @@ test_that("plot_compass works", {
 
   plot_compass(c_obj_list, dir_save = tempdir(), type = c('pp', 'scores'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
-               shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052)
+               shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.05)
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  rm_fn()
+
+  # boxplot widths
+  # ------------------
+  plot_compass(c_obj_list, dir_save = tempdir(), type = c('pp', 'scores'),
+               return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+               shift_plot_pp_y = -0.05,
+               boxplot_width_pp = 0.1, boxplot_width_scores = 0.3, shift_plot_heatmap_x = 0.05)
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
   rm_fn()
 
@@ -84,7 +93,7 @@ test_that("plot_compass works", {
 
   plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
-               shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052, cyt_lab = get_cyt_lab)
+               shift_plot_pp_y = -0.05, cyt_lab = get_cyt_lab)
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
   rm_fn()
 
