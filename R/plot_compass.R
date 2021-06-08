@@ -85,6 +85,7 @@
 #' If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
 #' If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
 #' If \code{file_ind} is named, then the names of \code{c_obj} are used to map onto elements of \code{file_ind}.
+#'
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
