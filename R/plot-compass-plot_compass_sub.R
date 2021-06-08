@@ -45,7 +45,7 @@
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
-      lims(y = y_lim_vec) +
+      coord_cartesian(y = y_lim_vec) +
       theme(legend.position = 'none')
   }) %>%
     setNames(names(c_obj))
