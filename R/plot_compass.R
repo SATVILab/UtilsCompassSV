@@ -74,6 +74,13 @@
 #' \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
 #' set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
 #' This will change the label for \code{"IFNg"} but leave all the others as is.
+#' @param save_ind logical. If \code{TRUE}, then plots for individual elements in \code{c_obj} are saved.
+#' Default is \code{FALSE}.
+#' @param save_grid logical. If \code{TRUE}, then a grid of all individual elements in \code{c_obj} are saved.
+#' Default is \code{TRUE}.
+#' @param height_ind,width_ind numeric. Height and width, respectively (of course), of the saved figure (if saved),
+#' when saving individual elements in \code{c_obj}. If
+#' \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
@@ -126,11 +133,13 @@ plot_compass <- function(
   return_plot_list = TRUE,
   facet = FALSE,
   n_col = NULL,
+  cyt_lab = NULL,
+  save_grid = TRUE,
   height_grid = NULL,
   width_grid = NULL,
-  heigth_ind = NULL,
-  width_ind = NULL,
-  cyt_lab = NULL){
+  save_ind = FALSE,
+  height_ind = NULL,
+  width_ind = NULL){
 
   # prep
   # -------------------
@@ -179,98 +188,44 @@ plot_compass <- function(
       c_obj = c_obj,
       plot_prob_fill = plot_prob_fill
       )
-  }
+  } else p_list_scores <- NULL
 
+  # save individaul plots
 
-  p <- cowplot::ggdraw()
-  n_grp <- length(p_list_pp$p_probs)
-  if(!scores_ind) prop_pp[1] <- 1
-  if(is.null(n_col)) n_col <- min(2, n_grp)
-  n_row <- ceiling(n_grp/n_col)
-  height_region <- 1/n_row
-  height_pp_base <- height_region * prop_pp[2]
-  height_pp <- height_pp_base + shift_plot_pp_y * height_pp_base
-  height_grid <- height_region * (1 - prop_pp[2])
-  width_region <- 1/n_col
-  width_pp <- width_region * prop_pp[1]
-  width_scores <- width_region * (1 - prop_pp[1])
-  shift_label_x <- width_region * shift_label[1]
-  shift_label_y <- height_region * shift_label[2]
-  for(i in seq_along(p_list_pp$p_probs)){
-
-    # overall location in grid
-    row_ind <- i %/% n_col + i %% n_col
-    col_ind <- i - (row_ind - 1) * n_col
-    x_left_most <- (col_ind - 1) * width_region
-    y_bottom_most <- 1 - row_ind * height_region
-
-    # pp
-    y_pp <- y_bottom_most + height_grid
-    x_pp <- x_left_most
-
-    # grid
-    y_grid <- y_bottom_most
-    x_grid_base <- x_left_most
-    x_grid <- x_grid_base + shift_plot_grid_x * width_pp
-    width_grid <- width_pp - shift_plot_grid_x * width_pp
-
-    p <- p +
-      # add pp
-      cowplot::draw_plot(
-        plot = p_list_pp$p_probs[[i]],
-        y = y_pp, height = height_pp,
-        x = x_pp, width = width_pp
-      ) +
-      # add grid
-      cowplot::draw_plot(
-        plot = p_list_pp$p_grid,
-        y = y_grid, height = height_grid,
-        x = x_grid, width = width_grid
+  if(save_ind){
+    .save_layout(
+      ind = TRUE, p_list_pp = p_list_pp,
+      p_list_scores = p_list_scores,
+      shift_plot_grid_x = shift_plot_grid_x,
+      shift_plot_scores_y = shift_plot_scores_y,
+      shift_plot_pp_y = shift_plot_pp_y,
+      prop_pp = prop_pp,
+      height = height_ind, width = width_ind,
+      dir_save = dir_save,
+      file = file,
+      save_format = save_format,
+      label = label,
+      n_col = 1,
+      shift_label = shift_label
       )
-
-
-    # scores
-    if(scores_ind){
-      y_scores_base <- y_bottom_most + height_grid
-      y_scores <- y_scores_base + height_pp * shift_plot_scores_y[1]
-      height_scores <- height_pp + height_pp * shift_plot_scores_y[2]
-      x_scores <- x_left_most + width_pp
-      p <- p +
-        cowplot::draw_plot(
-          plot = p_list_scores[[names(p_list_pp$p_probs)[i]]] +
-            theme(axis.title.x = element_blank()),
-          y = y_scores, height = height_scores,
-          x = x_scores, width = width_scores
-        )
-    }
-
-    if(label){
-      p <- p +
-        cowplot::draw_text(
-          text = names(p_list_pp$p_probs)[i],
-          fontface = "bold",
-          x = x_left_most + shift_label_x,
-          y = y_bottom_most + height_region + shift_label_y,
-          vjust = 0, hjust = 0
-        )
-    }
   }
 
-  if(save){
-    if(is.null(height_grid)){
-      height_grid <- 29 * 9/16 * 0.9 * n_row
-    }
-    if(is.null(width_grid)){
-      width_grid <- ifelse(n_col == 1, 18, 29.4)
-    }
-    if(!dir.exists(dir_save)) dir.create(dir_save, recursive = TRUE)
-    cowplot::ggsave2(filename = file.path(dir_save,
-                                          paste0(
-                                            ifelse(is.null(file), 'compass_boxplots', file),
-                                            '.', save_format
-                                          )),
-                     plot = p,
-                     units = 'cm', width = width_grid, height = height_grid)
+  if(save_grid){
+    .save_layout(
+      ind = FALSE, p_list_pp = p_list_pp,
+      p_list_scores = p_list_scores,
+      shift_plot_grid_x = shift_plot_grid_x,
+      shift_plot_scores_y = shift_plot_scores_y,
+      shift_plot_pp_y = shift_plot_pp_y,
+      prop_pp = prop_pp,
+      height = height_grid, width = width_grid,
+      dir_save = dir_save,
+      file = file,
+      n_col = n_col,
+      save_format = save_format,
+      label = label,
+      shift_label = shift_label
+    )
   }
 
 
@@ -278,237 +233,8 @@ plot_compass <- function(
 
   p_list_pp %>%
     append(switch(as.character(scores_ind), "TRUE" = list('p_scores' = p_list_scores), "FALSE" = list()))
-
-}
-
-# prep
-# -------------------
-
-#' @title Plot COMPASS PFS and FS scores
-#'
-#' @inheritParams plot_compass
-#' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
-#'
-#' @return A named list with names set to the names
-#' of \code{c_obj}, where each element is the corresponding
-#' boxplot of PFS and FS scores.
-.plot_compass_scores <- function(c_obj, plot_prob_fill){
-
-  # prep
-  score_tbl <- purrr::map_df(seq_along(c_obj), function(i){
-    x <- c_obj[[i]]
-    pfs_vec <- COMPASS::PolyfunctionalityScore(x)
-    fs_vec <- COMPASS::FunctionalityScore(x)
-    tibble::tibble(.id = names(pfs_vec), .grp = names(c_obj)[i],
-                   PFS = pfs_vec) %>%
-      dplyr::mutate(FS = fs_vec[.id])
-  }) %>%
-    tidyr::pivot_longer(-c(.id, .grp),
-                        names_to = "score_type",
-                        values_to = "score")
-
-  y_lim_vec <- c(0, max(score_tbl$score))
-  col_vec_grp <- .get_col_vec_grp(
-    plot_prob_fill = plot_prob_fill,
-    .grp = names(c_obj)
-  )
-
-  purrr::map(names(c_obj), function(.grp_curr){
-    ggplot(score_tbl %>%
-             dplyr::filter(.grp == .grp_curr),
-           aes(x = score_type, y = score, fill = .grp)) +
-      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50') +
-      cowplot::theme_cowplot() +
-      cowplot::background_grid() +
-      labs(x = "Score type", y = "Score") +
-      scale_fill_manual(values = col_vec_grp) +
-      lims(y = y_lim_vec) +
-      theme(legend.position = 'none')
-  }) %>%
-    setNames(names(c_obj))
 }
 
 
-
-#' @title Plot COMPASS posterior probabilites
-#'
-#' @inheritParams plot_compass
-#' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
-#'
-#' @return A named list with names 'p_probs' and 'p_grid',
-#' corresponding to the list of ggplot2 plots of posterior plots
-#' and the heat map of the corresponding cytokine combination
-#' labels, respectively.
-.plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
-                             silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab){
-  pp_tbl <- purrr::map_df(seq_along(c_obj), function(i){
-    x <- c_obj[[i]]
-    pp_mat <- x$fit$mean_gamma
-    colnames(pp_mat) <- convert_cyt_combn_format(
-      colnames(pp_mat),
-      to = 'std'
-    )
-    pp_tbl <- tibble::as_tibble(pp_mat)
-    id_var <- x$data$individual_id
-    pp_tbl[['.id']] <- x$data$meta[[id_var]]
-    pp_tbl <- pp_tbl[,'.id'] %>%
-      dplyr::bind_cols(pp_tbl[,!(colnames(pp_tbl) == '.id')])
-    pp_tbl %>%
-      tidyr::pivot_longer(-.id,
-                          names_to = 'combn',
-                          values_to = 'prob') %>%
-      dplyr::mutate(.grp = names(c_obj)[i])
-  }) %>%
-    dplyr::mutate(.grp = factor(.data$.grp, levels = names(c_obj)))
-
-
-  # filter out low-response cytokine combinations
-  # ----------------------
-  combn_sel_vec <- pp_tbl %>%
-    dplyr::filter(stringr::str_detect(combn, "[[+]]")) %>%
-    dplyr::group_by(combn, .grp) %>%
-    dplyr::filter(quantile(prob, prob_min) >= quant_min) %>%
-    magrittr::extract2("combn") %>%
-    unique()
-
-  if(length(combn_sel_vec) == 0){
-    if(!silent){
-      warning(
-        "No cytokine combinations met inclusion criteria. An unnamed list with a blank plot returned."
-      )
-    }
-    return(switch(as.character(return_plot),
-                  "TRUE" = switch(as.character(init_list),
-                                  "TRUE" = purrr::map(c_obj, function(x) ggplot()) %>%
-                                    setNames(init_name_vec)),
-                  "FALSE" = invisible(TRUE)))
-  }
-
-  # calculate degree of each cytokine combination
-  # ------------------------
-
-  degree_lab_vec <- purrr::map_chr(combn_sel_vec, function(combn){
-    nrow(stringr::str_locate_all(combn, "[[+]]")[[1]])
-  }) %>%
-    setNames(combn_sel_vec)
-
-  pp_tbl %<>%
-    dplyr::filter(combn %in% combn_sel_vec) %>%
-    dplyr::mutate(degree = degree_lab_vec[combn])
-
-  # order cyt combns within each degree by post probs
-  # -------------------------
-  combn_factor_levels_vec <- pp_tbl %>%
-    dplyr::group_by(degree, combn, .grp) %>%
-    dplyr::summarise(quant = quantile(prob, 0.75), .groups = 'drop') %>%
-    dplyr::group_by(degree, combn) %>%
-    dplyr::filter(quant == max(quant)) %>%
-    dplyr::slice(1) %>%
-    dplyr::group_by(degree) %>%
-    dplyr::arrange(quant, .by_group = TRUE) %>%
-    dplyr::ungroup() %>%
-    magrittr::extract2("combn")
-
-  pp_tbl %<>%
-    dplyr::mutate(combn = factor(.data$combn, levels = combn_factor_levels_vec))
-
-  # create grid tbl
-  # --------------------------
-
-  # get order of cytokines for grid
-  if(is.null(cyt_order)){
-    cyt_order <- stringr::str_split(pp_tbl[['combn']][1], "[[+-]]")[[1]]
-    cyt_order <- cyt_order[-length(cyt_order)]
-  } else{
-    cyt_order_compass <- stringr::str_split(pp_tbl[['combn']][1], "[[+-]]")[[1]]
-    cyt_order_compass <- cyt_order_compass[-length(cyt_order_compass)]
-    if(!identical(sort(intersect(cyt_order_compass, cyt_order)), sort(cyt_order))){
-      warning("cytokines in COMPASS and cyt_order differ, and so the cytokines in COMPASS are used.")
-      cyt_order <- cyt_order_compass
-    }
-  }
-
-  # create base table for grid
-  grid_tbl <- pp_tbl %>%
-    dplyr::select(combn, degree) %>%
-    dplyr::group_by(combn, degree) %>%
-    dplyr::slice(1) %>%
-    dplyr::ungroup()
-
-  for(cyt in cyt_order){
-    grid_tbl[[cyt]] <- as.character(stringr::str_detect(grid_tbl$combn, paste0(cyt, "[[+]]")))
-  }
-
-  grid_tbl %<>%
-    tidyr::pivot_longer(-c(combn, degree),
-                        names_to = 'cyt',
-                        values_to = 'expressed') %>%
-    dplyr::mutate(cyt = factor(.data$cyt,
-                               levels = cyt_order))
-
-  # set up colours
-  # --------------------
-
-  # grid
-  col_vec <- RColorBrewer::brewer.pal(n = length(cyt_order),
-                                      name = "YlOrBr")
-  col_vec <- col_vec[-(1:((length(col_vec) - max(as.numeric(grid_tbl$degree)))))]
-  expr_degree_lab_vec <- setNames(col_vec, paste0("TRUE", 1:length(col_vec)))
-  expr_degree_lab_vec <- c(expr_degree_lab_vec, setNames(rep('white', length(col_vec)),
-                                                         paste0("FALSE", 1:length(col_vec))))
-
-  col_vec_grp <- .get_col_vec_grp(plot_prob_fill = plot_prob_fill, .grp = names(c_obj))
-
-  # grid
-  p_grid <- ggplot(grid_tbl %>%
-                     dplyr::mutate(expr_degree = paste0(expressed, degree)),
-                   aes(x = combn, y = cyt,
-                       fill = expr_degree)) +
-    cowplot::theme_cowplot() +
-    #geom_raster(col = 'black', linetype = 'solid') +
-    geom_tile(col = 'black') +
-    scale_fill_manual(values = expr_degree_lab_vec) +
-    theme(legend.position = 'none') +
-    theme(axis.text.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank())
-
-  if(!is.null(cyt_lab)){
-    p_grid_orig <- p_grid
-    p_grid <- try(p_grid +
-      scale_y_discrete(labels = cyt_lab))
-    if(identical(class(p_grid), 'try-error')){
-      warning("Using cyt_lab created an error. Creating cytokine grid plot without it.")
-      p_grid <- p_grid_orig
-    }
-    rm(list = 'p_grid_orig')
-  }
-
-
-  p_probs <- purrr::map(seq_along(c_obj), function(i){
-    grp_curr <- names(c_obj)[i]
-    p <- ggplot(pp_tbl %>%
-                  dplyr::filter(.grp == grp_curr),
-                aes(x = combn, y = prob, fill = .grp)) +
-      cowplot::theme_cowplot() +
-      cowplot::background_grid(major = 'y') +
-      geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50') +
-      scale_fill_manual(values = col_vec_grp) +
-      lims(y = c(0,1)) +
-      theme(axis.text.x = element_text(angle = 90),
-            legend.position = 'none') +
-      labs(y = "Probability of a response") +
-      theme(axis.text.x = element_blank(),
-            axis.ticks.x = element_blank(),
-            axis.title.x = element_blank())
-    if(facet) p <- p + facet_wrap(~.grp)
-    p
-  }) %>%
-    setNames(names(c_obj))
-
-  list("p_grid" = p_grid, "p_probs" = p_probs)
-}
 
 

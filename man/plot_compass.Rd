@@ -25,9 +25,13 @@ plot_compass(
   return_plot_list = TRUE,
   facet = FALSE,
   n_col = NULL,
-  height = NULL,
-  width = NULL,
-  cyt_lab = NULL
+  cyt_lab = NULL,
+  save_grid = TRUE,
+  height_grid = NULL,
+  width_grid = NULL,
+  save_ind = FALSE,
+  height_ind = NULL,
+  width_ind = NULL
 )
 }
 \arguments{
@@ -110,9 +114,6 @@ group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved
 If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},
 then both the facted and individual plots are saved.}
 
-\item{height, width}{numeric. Height and width, respectively (of course), of the saved figure (if saved). If
-\code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
-
 \item{cyt_lab}{function. A function that takes the cytokine names as input and returns the
 value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
 it is supplied when creating the grid plot to the \code{scale_y_continuous} function
@@ -120,6 +121,19 @@ via the \code{labels} parameter. For example, if we have two cytokines, \code{"I
 \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
 set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
 This will change the label for \code{"IFNg"} but leave all the others as is.}
+
+\item{save_grid}{logical. If \code{TRUE}, then a grid of all individual elements in \code{c_obj} are saved.
+Default is \code{TRUE}.}
+
+\item{height_grid, width_grid}{numeric. Height and width, respectively (of course), of the saved figure (if saved). If
+\code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
+
+\item{save_ind}{logical. If \code{TRUE}, then plots for individual elements in \code{c_obj} are saved.
+Default is \code{FALSE}.}
+
+\item{height_ind, width_ind}{numeric. Height and width, respectively (of course), of the saved figure (if saved),
+when saving individual elements in \code{c_obj}. If
+\code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.

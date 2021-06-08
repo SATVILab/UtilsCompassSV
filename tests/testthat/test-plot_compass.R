@@ -2,18 +2,29 @@ test_that("plot_compass works", {
   data('c_obj_list', package = 'compassutils')
   plot_compass(c_obj_list, dir_save = tempdir(), type = 'pp', return_plot_list = FALSE,
                shift_plot_pp_y = -0.07, shift_plot_grid_x = 0.034)
-  expect_true(file.exists(file.path(tempdir(), "compass_boxplots.png")))
-  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots.png"))))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
+  data('c_obj_list', package = 'compassutils')
+  plot_compass(c_obj_list, dir_save = tempdir(), type = 'pp', return_plot_list = FALSE,
+               shift_plot_pp_y = -0.07, shift_plot_grid_x = 0.034, save_ind = TRUE,
+               save_grid = FALSE)
+  expect_true(!file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots-EBV_CMV.png")))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots-Live Mtb.png")))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots-Non-secreted Mtb proteins.png")))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots-Secreted Mtb proteins.png")))
+
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
 
   plot_compass(c_obj_list, dir_save = tempdir(), facet = FALSE, type = 'pp', return_plot_list = FALSE)
-  expect_true(file.exists(file.path(tempdir(), "compass_boxplots.png")))
-  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots.png"))))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
 
   plot_compass(c_obj_list, dir_save = tempdir(), type = c('pp', 'scores'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
                shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052)
-  expect_true(file.exists(file.path(tempdir(), "compass_boxplots.png")))
-  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots.png"))))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
 
   get_cyt_lab <- function(cyt){
     lapply(cyt, function(cyt_ind){
@@ -26,7 +37,8 @@ test_that("plot_compass works", {
   plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
                shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
-  expect_true(file.exists(file.path(tempdir(), "compass_boxplots.png")))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
 
   get_cyt_lab <- function(cyt){
     lapply(cyt, function(cyt_ind){
@@ -42,6 +54,6 @@ test_that("plot_compass works", {
   plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
                shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
-  expect_true(file.exists(file.path(tempdir(), "compass_boxplots.png")))
-  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots.png"))))
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  invisible(suppressWarnings(file.remove(file.path(tempdir(), "compass_boxplots_grid.png"))))
 })
