@@ -4,7 +4,6 @@
 # compassutils
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 The goal of compassutils is to supply useful plotting and utility
@@ -17,7 +16,7 @@ You can install the latest version of compassutils from
 
 ``` r
 if(!require("devtools", quietly = TRUE)) install.packages('devtools')
-devtools::install_github("SATVILab/compassutils.git")
+devtools::install_github("SATVILab/compassutils")
 ```
 
 ## Example
@@ -41,7 +40,7 @@ plot_compass(
   return_plot_list = FALSE, 
   shift_plot_scores = c(-0.05, 0.05), 
   shift_plot_pp_y = -0.075, 
-  shift_plot_grid_x = 0.052
+  shift_plot_heatmap_x = 0.052
   )
 knitr::include_graphics('data-raw/compass_boxplots.png')
 ```
@@ -51,7 +50,7 @@ knitr::include_graphics('data-raw/compass_boxplots.png')
 ### Utilities
 
 You can convert cytokine combination formats between standard “+/-”
-format and COMPASS “\!&” format.
+format and COMPASS “!&” format.
 
 ``` r
 cyt_combn_vec_compass <- c("IFNg&!IL2&TNF&IL6&!IL22",
@@ -65,8 +64,8 @@ pander::pandoc.table(tibble::tibble(
   ))
 ```
 
-|         COMPASS format          |    Standard format     |
-| :-----------------------------: | :--------------------: |
-|   IFNg&\!IL2\&TNF\&IL6&\!IL22   | IFNg+IL2-TNF+IL6+IL22- |
-|    IFNg\&IL2\&TNF\&IL6\&IL22    | IFNg+IL2+TNF+IL6+IL22+ |
-| \!IFNg&\!IL2&\!TNF&\!IL6&\!IL22 | IFNg-IL2-TNF-IL6-IL22- |
+|       COMPASS format       |    Standard format     |
+|:--------------------------:|:----------------------:|
+|  IFNg&!IL2&TNF&IL6&!IL22   | IFNg+IL2-TNF+IL6+IL22- |
+|   IFNg&IL2&TNF&IL6&IL22    | IFNg+IL2+TNF+IL6+IL22+ |
+| !IFNg&!IL2&!TNF&!IL6&!IL22 | IFNg-IL2-TNF-IL6-IL22- |
