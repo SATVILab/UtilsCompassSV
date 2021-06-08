@@ -51,7 +51,7 @@
 #' elements in \code{c_obj} are used as labels for sub-figures.
 #' If \code{c_obj} is not a list, then no label is printed, regardless of the
 #' value of \code{label}. Default is \code{TRUE}.
-#' @param height,width numeric. Height and width, respectively (of course), of the saved figure (if saved). If
+#' @param height_grid,width_grid numeric. Height and width, respectively (of course), of the saved figure (if saved). If
 #' \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.
 #' @param shift_label numeric vector, values in \code{[0,1]}. Specifies amount by which to shift
 #' the labels of the plot (if used). Default is \code{c(0.05, -0.04)}.
@@ -126,8 +126,10 @@ plot_compass <- function(
   return_plot_list = TRUE,
   facet = FALSE,
   n_col = NULL,
-  height = NULL,
-  width = NULL,
+  height_grid = NULL,
+  width_grid = NULL,
+  heigth_ind = NULL,
+  width_ind = NULL,
   cyt_lab = NULL){
 
   # prep
@@ -255,20 +257,20 @@ plot_compass <- function(
   }
 
   if(save){
-    if(is.null(height)){
-      height <- 29 * 9/16 * 0.9 * n_row
+    if(is.null(height_grid)){
+      height_grid <- 29 * 9/16 * 0.9 * n_row
     }
-    if(is.null(width)){
-      width <- ifelse(n_col == 1, 18, 29.4)
+    if(is.null(width_grid)){
+      width_grid <- ifelse(n_col == 1, 18, 29.4)
     }
     if(!dir.exists(dir_save)) dir.create(dir_save, recursive = TRUE)
     cowplot::ggsave2(filename = file.path(dir_save,
                                           paste0(
-                                            ifelse(is.null(file), 'compass_boxplots', file), '.', save_format
-                                          )
-    ),
-    plot = p,
-    units = 'cm', width = width, height = height)
+                                            ifelse(is.null(file), 'compass_boxplots', file),
+                                            '.', save_format
+                                          )),
+                     plot = p,
+                     units = 'cm', width = width_grid, height = height_grid)
   }
 
 
