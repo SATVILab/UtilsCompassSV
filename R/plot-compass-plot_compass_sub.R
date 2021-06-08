@@ -10,8 +10,9 @@
 #' of \code{c_obj}, where each element is the corresponding
 #' boxplot of PFS and FS scores.
 .plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
-                                 boxplot_width_pp = boxplot_width_pp,
-                                 boxplot_width_scores = boxplot_width_scores){
+                                 boxplot_width_pp,
+                                 boxplot_width_scores,
+                                 plot_scores_lims_y){
 
   # prep
   score_tbl <- purrr::map_df(seq_along(c_obj), function(i){
@@ -26,7 +27,9 @@
                         names_to = "score_type",
                         values_to = "score")
 
-  y_lim_vec <- c(0, max(score_tbl$score))
+  if(is.null(plot_scores_lims_y)){
+    y_lim_vec <- c(0, max(score_tbl$score))
+  } else y_lim_vec <- plot_scores_lims_y
   col_vec_grp <- .get_col_vec_grp(
     plot_prob_fill = plot_prob_fill,
     .grp = names(c_obj)

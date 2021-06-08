@@ -34,7 +34,8 @@ plot_compass(
   width_grid = NULL,
   save_ind = FALSE,
   height_ind = NULL,
-  width_ind = NULL
+  width_ind = NULL,
+  plot_scores_lims_y = NULL
 )
 }
 \arguments{
@@ -139,6 +140,9 @@ Default is \code{FALSE}.}
 \item{height_ind, width_ind}{numeric. Height and width, respectively (of course), of the saved figure (if saved),
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
+
+\item{plot_scores_lims_y}{numeric vector of length 2. If not \code{NULL}, specifies the y-axis range for the scores plots.
+Default is \code{NULL}.}
 
 \item{file}{character. Name of saved plot. If \code{NULL}, then
 set to `compass_boxplots`.}

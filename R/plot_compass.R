@@ -89,7 +89,8 @@
 #' If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
 #' If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
 #' If \code{file_ind} is named, then the names of \code{c_obj} are used to map onto elements of \code{file_ind}.
-#'
+#' @param plot_scores_lims_y numeric vector of length 2. If not \code{NULL}, specifies the y-axis range for the scores plots.
+#' Default is \code{NULL}.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
@@ -151,7 +152,8 @@ plot_compass <- function(
   width_grid = NULL,
   save_ind = FALSE,
   height_ind = NULL,
-  width_ind = NULL){
+  width_ind = NULL,
+  plot_scores_lims_y = NULL){
 
   # prep
   # -------------------
@@ -200,7 +202,8 @@ plot_compass <- function(
     p_list_scores <- .plot_compass_scores(
       c_obj = c_obj,
       boxplot_width = boxplot_width_scores,
-      plot_prob_fill = plot_prob_fill
+      plot_prob_fill = plot_prob_fill,
+      plot_scores_lims_y = plot_scores_lims_y
       )
   } else p_list_scores <- NULL
 

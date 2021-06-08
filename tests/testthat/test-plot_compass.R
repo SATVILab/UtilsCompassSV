@@ -28,11 +28,11 @@ test_that("plot_compass works", {
 
 
 
-  plot_compass(c_obj_list, dir_save = tempdir(), facet = FALSE, type = 'pp', return_plot_list = FALSE)
+  plot_compass(c_obj_list[1], dir_save = tempdir(), facet = FALSE, type = 'pp', return_plot_list = FALSE)
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
   rm_fn()
 
-  plot_compass(c_obj_list, dir_save = tempdir(), type = c('pp', 'scores'),
+  plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp', 'scores'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
                shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.05)
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
@@ -40,10 +40,19 @@ test_that("plot_compass works", {
 
   # boxplot widths
   # ------------------
-  plot_compass(c_obj_list, dir_save = tempdir(), type = c('pp', 'scores'),
+  plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp', 'scores'),
                return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
                shift_plot_pp_y = -0.05,
                boxplot_width_pp = 0.1, boxplot_width_scores = 0.3, shift_plot_heatmap_x = 0.05)
+  expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
+  rm_fn()
+
+  # scores lims
+  # ------------------
+  plot_compass(c_obj_list[1], dir_save = tempdir(), type = c('pp', 'scores'),
+               return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+               shift_plot_pp_y = -0.05,
+               plot_scores_lims_y = c(0, 0.5))
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
   rm_fn()
 
