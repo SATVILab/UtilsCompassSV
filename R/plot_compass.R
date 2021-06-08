@@ -18,7 +18,7 @@
 #' If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Default is \code{NULL}.
 #' @param silent logical. If \code{TRUE}, then any warnings that would have been otherwise given
 #' are not. Default is \code{FALSE}.
-#' @param shift_plot_grid_x [0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
+#' @param shift_plot_heatmap_x [0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
 #' the probability plot further to the right. Maximum value is 1 (at which point the plot will
 #' effectively be pushed off the plotting surface). Useful to increase to a value such as 0.01
 #' if the cytokine names are long and push the labelling grid too far to the right. Tweak as required.
@@ -81,6 +81,10 @@
 #' @param height_ind,width_ind numeric. Height and width, respectively (of course), of the saved figure (if saved),
 #' when saving individual elements in \code{c_obj}. If
 #' \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.
+#' @param file,file_ind character (vector). Names for grid plot and individual plots, respectively, to be saved as.
+#' If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
+#' If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
+#' If \code{file_ind} is named, then the names of \code{c_obj} are used to map onto elements of \code{file_ind}.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
@@ -94,7 +98,7 @@
 #' return_plot_list = FALSE,
 #' shift_plot_scores = c(-0.05, 0.05),
 #' shift_plot_pp_y = -0.075,
-#' shift_plot_grid_x = 0.052
+#' shift_plot_heatmap_x = 0.052
 #' )
 #' The plot will then be saved to the working directory.
 #'
@@ -108,7 +112,7 @@
 #'  }
 #'  plot_compass(c_obj_list[1], type = c('pp'),
 #'  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
-#'  shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
+#'  shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052, cyt_lab = get_cyt_lab)
 #'
 #' @importFrom rlang !! ensym
 #' @import ggplot2
@@ -122,9 +126,10 @@ plot_compass <- function(
   quant_min = 0.25,
   silent = FALSE,
   cyt_order = NULL,
-  file = NULL,
+  file_grid = NULL,
+  file_ind = NULL,
   plot_prob_fill = NULL,
-  shift_plot_grid_x = 0,
+  shift_plot_heatmap_x = 0,
   shift_plot_scores_y = c(0,0),
   shift_plot_pp_y = 0,
   shift_label = c(0.05, -0.04),
@@ -196,13 +201,13 @@ plot_compass <- function(
     .save_layout(
       ind = TRUE, p_list_pp = p_list_pp,
       p_list_scores = p_list_scores,
-      shift_plot_grid_x = shift_plot_grid_x,
+      shift_plot_heatmap_x = shift_plot_heatmap_x,
       shift_plot_scores_y = shift_plot_scores_y,
       shift_plot_pp_y = shift_plot_pp_y,
       prop_pp = prop_pp,
       height = height_ind, width = width_ind,
       dir_save = dir_save,
-      file = file,
+      file = file_ind,
       save_format = save_format,
       label = label,
       n_col = 1,
@@ -214,13 +219,13 @@ plot_compass <- function(
     .save_layout(
       ind = FALSE, p_list_pp = p_list_pp,
       p_list_scores = p_list_scores,
-      shift_plot_grid_x = shift_plot_grid_x,
+      shift_plot_heatmap_x = shift_plot_heatmap_x,
       shift_plot_scores_y = shift_plot_scores_y,
       shift_plot_pp_y = shift_plot_pp_y,
       prop_pp = prop_pp,
       height = height_grid, width = width_grid,
       dir_save = dir_save,
-      file = file,
+      file = file_grid,
       n_col = n_col,
       save_format = save_format,
       label = label,

@@ -6,7 +6,7 @@
 #' @param height,width numeric. Height and width of saved plot(s).
 #' @inheritParams plot_compass
 .save_layout <- function(p, ind, p_list_pp, p_list_scores = NULL,
-                         prop_pp, shift_plot_grid_x,
+                         prop_pp, shift_plot_heatmap_x,
                          shift_plot_scores_y,
                          shift_plot_pp_y,
                          height, width,
@@ -55,8 +55,8 @@
     # grid
     y_grid <- y_bottom_most
     x_grid_base <- x_left_most
-    x_grid <- x_grid_base + shift_plot_grid_x * width_pp
-    width_grid <- width_pp - shift_plot_grid_x * width_pp
+    x_grid <- x_grid_base + shift_plot_heatmap_x * width_pp
+    width_grid <- width_pp - shift_plot_heatmap_x * width_pp
 
     p <- p +
       # add pp
@@ -102,13 +102,20 @@
     if(ind){
       if(!is.null(file)){
         if(length(file) == length(p_list_pp$p_probs)){
-          fn_curr <- file[i]
+          if(is.null(names(file))){
+            fn_curr <- file[i]
+          } else{
+            fn_curr <- file[names(p_list_pp$p_probs)[i]]
+            if(is.na(fn_curr)) fn_curr <- NULL
+          }
         } else fn_curr <- NULL
       } else fn_curr <- NULL
       if(is.null(fn_curr)){
         fn_curr <- paste0('compass_boxplots-',
-                          names(p_list_pp$p_probs)[i] %>%
-                            stringr::str_replace_all("/", "_"))
+                          switch(as.character(is.null(names(p_list_pp$p_probs))),
+                                 "TRUE" = i,
+                                 "FALSE" = names(p_list_pp$p_probs)[i] %>%
+                                   stringr::str_replace_all("/", "_")))
       }
 
       .save_plot(p = p, height = height, width = width, dir_save = dir_save,
@@ -120,8 +127,6 @@
 
   # if saving individual plots, exit now
   if(ind) return(invisible(TRUE))
-
-
 
   .save_plot(p = p, height = height, width = width,
              dir_save = dir_save, file = file,

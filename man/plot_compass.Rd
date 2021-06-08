@@ -15,6 +15,7 @@ plot_compass(
   silent = FALSE,
   cyt_order = NULL,
   file = NULL,
+  file_ind = NULL,
   plot_prob_fill = NULL,
   shift_plot_grid_x = 0,
   shift_plot_scores_y = c(0, 0),
@@ -134,6 +135,11 @@ Default is \code{FALSE}.}
 \item{height_ind, width_ind}{numeric. Height and width, respectively (of course), of the saved figure (if saved),
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
+
+\item{file, file_ind}{character (vector). Names for grid plot and individual plots, respectively, to be saved as.
+If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
+If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
+If \code{file_ind} is named, then the names of \code{c_obj} are used to map onto elements of \code{file_ind}.}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.
