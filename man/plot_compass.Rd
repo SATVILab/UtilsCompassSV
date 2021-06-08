@@ -12,12 +12,14 @@ plot_compass(
   save_format = "png",
   prob_min = 0.8,
   quant_min = 0.25,
+  boxplot_width_scores = NULL,
+  boxplot_width_pp = NULL,
   silent = FALSE,
   cyt_order = NULL,
-  file = NULL,
+  file_grid = NULL,
   file_ind = NULL,
   plot_prob_fill = NULL,
-  shift_plot_grid_x = 0,
+  shift_plot_heatmap_x = 0,
   shift_plot_scores_y = c(0, 0),
   shift_plot_pp_y = 0,
   shift_label = c(0.05, -0.04),
@@ -56,6 +58,11 @@ if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combination
 at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
 Default is \code{0.8} and \code{0.25}.}
 
+\item{boxplot_width_pp, boxplot_width_scores}{numeric. If not \code{NULL}, then supplied to \code{width} parameter of
+\code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
+to force the widths of the boxplots to be constant across elements in \code{c_obj}.
+Default is \code{NULL}.}
+
 \item{silent}{logical. If \code{TRUE}, then any warnings that would have been otherwise given
 are not. Default is \code{FALSE}.}
 
@@ -63,15 +70,12 @@ are not. Default is \code{FALSE}.}
 vertically along the annotation grid is given by this vector (with first element going at the bottom).
 If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Default is \code{NULL}.}
 
-\item{file}{character. Name of saved plot. If \code{NULL}, then
-set to `compass_boxplots`.}
-
 \item{plot_prob_fill}{character. If a colour, then the boxplots are filled according
 to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
 
-\item{shift_plot_grid_x}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
+\item{shift_plot_heatmap_x}{[0,1]. Extent to shift prob_plot. Increasing it from 0 moves the start of
 the probability plot further to the right. Maximum value is 1 (at which point the plot will
 effectively be pushed off the plotting surface). Useful to increase to a value such as 0.01
 if the cytokine names are long and push the labelling grid too far to the right. Tweak as required.
@@ -136,6 +140,9 @@ Default is \code{FALSE}.}
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 
+\item{file}{character. Name of saved plot. If \code{NULL}, then
+set to `compass_boxplots`.}
+
 \item{file, file_ind}{character (vector). Names for grid plot and individual plots, respectively, to be saved as.
 If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
 If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
@@ -158,7 +165,7 @@ type = c('pp', 'scores'),
 return_plot_list = FALSE,
 shift_plot_scores = c(-0.05, 0.05),
 shift_plot_pp_y = -0.075,
-shift_plot_grid_x = 0.052
+shift_plot_heatmap_x = 0.052
 )
 The plot will then be saved to the working directory.
 
@@ -172,6 +179,6 @@ get_cyt_lab <- function(cyt){
  }
  plot_compass(c_obj_list[1], type = c('pp'),
  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
- shift_plot_pp_y = -0.05, shift_plot_grid_x = 0.052, cyt_lab = get_cyt_lab)
+ shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052, cyt_lab = get_cyt_lab)
 
 }

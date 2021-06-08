@@ -4,7 +4,13 @@
 \alias{.plot_compass_scores}
 \title{Plot COMPASS PFS and FS scores}
 \usage{
-.plot_compass_scores(c_obj, plot_prob_fill)
+.plot_compass_scores(
+  c_obj,
+  plot_prob_fill,
+  boxplot_width,
+  boxplot_width_pp = boxplot_width_pp,
+  boxplot_width_scores = boxplot_width_scores
+)
 }
 \arguments{
 \item{c_obj}{a named list of COMPASSResult objects. Provides data to plot.}
@@ -13,6 +19,16 @@
 to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
+
+\item{boxplot_width_pp}{numeric. If not \code{NULL}, then supplied to \code{width} parameter of
+\code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
+to force the widths of the boxplots to be constant across elements in \code{c_obj}.
+Default is \code{NULL}.}
+
+\item{boxplot_width_scores}{numeric. If not \code{NULL}, then supplied to \code{width} parameter of
+\code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
+to force the widths of the boxplots to be constant across elements in \code{c_obj}.
+Default is \code{NULL}.}
 }
 \value{
 A named list with names set to the names

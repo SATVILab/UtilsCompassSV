@@ -13,7 +13,8 @@
   cyt_order,
   plot_prob_fill,
   facet,
-  cyt_lab
+  cyt_lab,
+  boxplot_width
 )
 }
 \arguments{
