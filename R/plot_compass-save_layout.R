@@ -151,7 +151,7 @@
     height <- 29 * 9/16 * 0.9 * n_row
   }
   if(is.null(width)){
-    width <- ifelse(n_col == 1, 18, 29.4)
+    width <- ifelse(n_col == 1, 29.4/2, 29.4)
   }
   if(!dir.exists(dir_save)) dir.create(dir_save, recursive = TRUE)
   cowplot::ggsave2(filename = file.path(dir_save,
