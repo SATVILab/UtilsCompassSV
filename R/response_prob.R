@@ -6,6 +6,9 @@
 #'
 #' @param c_obj object of class 'COMPASSResult'. The posterior probabilities
 #' for individual cytokine combinations are obtained here.
+#' @param exc character vector. Specifies cytokine combination(s) to exclude.
+#' If \code{NULL}, then none except the all-negative population are excluded.
+#' Default is \code{NULL}.
 #'
 #' @details Calculates the probability of an individual responding to
 #' at least one cytokine combination as (1-product((1-prob_i))),
@@ -18,9 +21,13 @@
 #' @examples
 #' data('c_obj', package = 'compassutils')
 #' response_prob(c_obj = c_obj)
+#' response_prob(
+#' c_obj = c_obj,
+#' exc = c('IFNg&IL2&TNF&!IL17&!IL6&!IL22',
+#' 'IFNg&!IL2&TNF&!IL17&!IL6&!IL22')
 #'
 #' @export
-response_prob <- function(c_obj){
+response_prob <- function(c_obj, exc = NULL){
   prob_mat <- c_obj$fit$mean_gamma
   sampleid_vec <- rownames(prob_mat)
   prob_tbl <- prob_mat %>%
@@ -37,6 +44,59 @@ response_prob <- function(c_obj){
   })
   all_neg_cyt_combn <- paste0("!", cyt_vec,
                               collapse = "&")
+  n_cyt_combn_max <- 2^length(cyt_vec)
+
+  prob_tbl <- prob_tbl[,-which(
+    stringr::str_detect(
+      colnames(prob_tbl),
+      all_neg_cyt_combn
+      )
+  )]
+
+  if(!ncol(prob_tbl) == n_cyt_combn_max){
+    stop(paste0(
+      "removing all neg cyt combn (calculated as ",
+      all_neg_cyt_combn,
+      ") failed. Please notify package maintainer at rdxmig002@myuct.ac.za."))
+  }
+
+  if(!is.null(exc)){
+    # check for matches
+    purrr::walk(exc, function(x){
+      cn_vec <- colnames(prob_tbl)[-1]
+      len_vec <- unique(stringr::str_length(cn_vec))
+      if(!stringr::str_length(x) %in%
+         len_vec){
+        stop(paste0(x, " is in exc but not in cyt combns of COMPASS object"),
+             call. = FALSE)
+      }
+      match_ind <- purrr::map_lgl(cn_vec, function(cn){
+        stringr::str_detect(cn, x)
+      }) %>%
+        any()
+      if(!match_ind){
+        stop(paste0(x, " is in exc but not in cyt combns of COMPASS object"),
+             call. = FALSE)
+      }
+    })
+
+    for(x in exc){
+      prob_tbl <- prob_tbl[,-which(
+        stringr::str_detect(
+          colnames(prob_tbl),
+          x
+        ) &
+          !stringr::str_detect(
+            colnames(prob_tbl),
+            paste0("!", x)
+          )
+      )]
+    }
+
+    if(ncol(prob_tbl) != (n_cyt_combn_max - length(exc))){
+      stop("Did not remove as many cytokine combinations from COMPASS object as in exc")
+    }
+  }
 
   prob_tbl %>%
     tidyr::pivot_longer(

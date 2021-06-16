@@ -4,11 +4,15 @@
 \alias{response_prob}
 \title{Calculate COMPASS-derived overall responder probability}
 \usage{
-response_prob(c_obj)
+response_prob(c_obj, exc = NULL)
 }
 \arguments{
 \item{c_obj}{object of class 'COMPASSResult'. The posterior probabilities
 for individual cytokine combinations are obtained here.}
+
+\item{exc}{character vector. Specifies cytokine combination(s) to exclude.
+If \code{NULL}, then none except the all-negative population are excluded.
+Default is \code{NULL}.}
 }
 \value{
 A dataframe with columns sampleid and prob.
@@ -28,5 +32,9 @@ except the all-negative cytokine combination.
 \examples{
 data('c_obj', package = 'compassutils')
 response_prob(c_obj = c_obj)
+response_prob(
+c_obj = c_obj,
+exc = c('IFNg&IL2&TNF&!IL17&!IL6&!IL22',
+'IFNg&!IL2&TNF&!IL17&!IL6&!IL22')
 
 }
