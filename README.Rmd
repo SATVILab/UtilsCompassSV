@@ -33,7 +33,7 @@ devtools::install_github("SATVILab/compassutils")
 
 ### Plots
 
-You can create boxplots of posterior probabilities for individual cytokine combinations, as well
+Create boxplots of posterior probabilities for individual cytokine combinations, as well
 as the PFS and FS responses. These are more concise than standard `COMPASS` heatmaps and automatically force the same cytokine combinations to be present and cytokines in the same order for all "groups" plotted together. Note that the PFS and FS scores plot need not be added.
 
 ```{r example-plot_compass, results = 'asis'}
@@ -48,12 +48,13 @@ plot_compass(
   shift_plot_pp_y = -0.075, 
   shift_plot_heatmap_x = 0.052
   )
-knitr::include_graphics('data-raw/compass_boxplots.png')
+knitr::include_graphics('data-raw/compass_boxplots_grid.png')
 ```
 
 ### Utilities
 
-You can convert cytokine combination formats between standard "+/-" format and COMPASS "!&" format. 
+Convert cytokine combination formats between standard "+/-" format and COMPASS "!&" format. 
+
 ```{r , results = 'asis'}
 cyt_combn_vec_compass <- c("IFNg&!IL2&TNF&IL6&!IL22",
                            "IFNg&IL2&TNF&IL6&IL22",
@@ -66,3 +67,10 @@ pander::pandoc.table(tibble::tibble(
   ))
 ```
 
+Calculate the probability of an individual responding to at least one cytokine combination, assuming independence of the probability estimates between cytokine combinations. 
+
+```{r , results = 'asis'}
+response_prob(c_obj = c_obj_list[[4]]) %>%
+  head() %>%
+  pander::pandoc.table()
+```
