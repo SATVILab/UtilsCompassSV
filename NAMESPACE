@@ -2,6 +2,7 @@
 
 export(convert_cyt_combn_format)
 export(plot_compass)
+export(response_prob)
 import(ggplot2)
 importFrom(magrittr,"%<>%")
 importFrom(magrittr,"%>%")
