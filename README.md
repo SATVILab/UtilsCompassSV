@@ -50,7 +50,7 @@ knitr::include_graphics('data-raw/compass_boxplots_grid.png')
 ### Utilities
 
 Convert cytokine combination formats between standard “+/-” format and
-COMPASS “!&” format.
+COMPASS “!&” format. Can also label cytokines/markers.
 
 ``` r
 cyt_combn_vec_compass <- c("IFNg&!IL2&TNF&IL6&!IL22",

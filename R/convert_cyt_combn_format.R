@@ -24,6 +24,7 @@
 #'
 #' @examples
 #' convert_cyt_combn_format(c("IFNg&!IL2"), to = 'std')
+#' convert_cyt_combn_format(c("IFNg+IL2-"), to = 'compass')
 #'
 #' @importFrom magrittr %>% %<>%
 convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALSE,

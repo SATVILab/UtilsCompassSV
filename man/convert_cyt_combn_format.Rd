@@ -44,5 +44,6 @@ See \code{cyt_combn} parameter for details. NOTE: At present only converts from 
 }
 \examples{
 convert_cyt_combn_format(c("IFNg&!IL2"), to = 'std')
+convert_cyt_combn_format(c("IFNg+IL2-"), to = 'compass')
 
 }
