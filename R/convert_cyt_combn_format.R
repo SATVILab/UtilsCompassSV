@@ -16,7 +16,8 @@
 #' it is detected that \code{cyt_combn} already appears to be in the requested format. Default is \code{FALSE}.
 #' @param check logical. If \code{TRUE}, then the converted format is checked that each element has
 #' the same number of cytokines. Note that check is only performed if the conversion is attempted. Default is \code{TRUE}.
-#'
+#' @param lab named character vector. Names are names for markers/channels as found in the cytokine combination,
+#' and elements are corresponding names/channels. If \code{NULL}, then no labelling is done. Default is \code{NULL}.
 #' @return character vector.
 #'
 #' @export
@@ -26,7 +27,7 @@
 #'
 #' @importFrom magrittr %>% %<>%
 convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALSE,
-                                     check = TRUE){
+                                     check = TRUE, lab = NULL){
 
   # prep
   # ------------------
@@ -68,8 +69,11 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
     out_vec <- purrr::map_chr(cyt_combn, function(x){
       purrr::map_chr(stringr::str_split(x, "&")[[1]], function(elem){
         if(stringr::str_detect(elem, "[[!]]")){
-          return(paste0(stringr::str_sub(elem, start = 2), "-"))
+          cyt <- stringr::str_sub(elem, start = 2)
+          if(!is.null(lab)) cyt <- lab[cyt]
+          return(paste0(cyt, "-"))
         }
+        if(!is.null(lab)) elem <- lab[elem]
         paste0(elem, "+")
       }) %>%
         unlist() %>%
@@ -94,7 +98,26 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
       }
     }
   } else if(to == 'compass'){
-    NULL
+    # convert
+    out_vec <- purrr::map_chr(cyt_combn, function(x){
+      cyt_vec <- stringr::str_split(x, "[[+-]]")[[1]]
+      cyt_vec <- cyt_vec[cyt_vec != ""]
+      if(!is.null(lab)) cyt_vec <- lab[cyt_vec]
+      level_vec <- stringr::str_split(x, "\\w")[[1]]
+      level_vec <- level_vec[level_vec != ""]
+      out <- cyt_vec[1]
+      if(identical(level_vec[1], "-")) out <- paste0("!", out)
+      cyt_vec <- cyt_vec[-1]
+      level_vec <- level_vec[-1]
+      for(i in seq_along(cyt_vec)){
+        if(identical(level_vec[i], "+")){
+          out <- paste0(out, "&", cyt_vec[i])
+        } else{
+          out <- paste0(out, "&!", cyt_vec[i])
+        }
+      }
+      out
+    })
   }
 
   out_vec

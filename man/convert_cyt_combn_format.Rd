@@ -9,7 +9,8 @@ convert_cyt_combn_format(
   to,
   force = FALSE,
   silent = FALSE,
-  check = TRUE
+  check = TRUE,
+  lab = NULL
 )
 }
 \arguments{
@@ -30,6 +31,9 @@ it is detected that \code{cyt_combn} already appears to be in the requested form
 
 \item{check}{logical. If \code{TRUE}, then the converted format is checked that each element has
 the same number of cytokines. Note that check is only performed if the conversion is attempted. Default is \code{TRUE}.}
+
+\item{lab}{named character vector. Names are names for markers/channels as found in the cytokine combination,
+and elements are corresponding names/channels. If \code{NULL}, then no labelling is done. Default is \code{NULL}.}
 }
 \value{
 character vector.
