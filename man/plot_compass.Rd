@@ -33,25 +33,23 @@ plot_compass(
   height_grid = NULL,
   width_grid = NULL,
   save_ind = FALSE,
+  font_size = 14,
   height_ind = NULL,
   width_ind = NULL,
   plot_scores_lims_y = NULL
 )
 }
 \arguments{
-\item{c_obj}{object of class 'COMPASSResult', or a list of such objects. Provides
-COMPASS data to plot.}
-
 \item{dir_save}{character. Where to save the output. Default is working directory.}
 
-\item{type}{'pp' and/or 'scores'. Specifies response type(s) to plot.
-If 'pp' is included, then posterior probabilities of individual cytokine combinations are plotted.
-If 'scores' is included, then the PFS and FS responses are included. Note that, at this stage,
-'pp' needs to be included, and so is added even if missing from \code{type}. Default is \code{c('pp', 'scores')}.}
+\item{type}{"pp" and/or "scores". Specifies response type(s) to plot.
+If "pp" is included, then posterior probabilities of individual cytokine combinations are plotted.
+If "scores" is included, then the PFS and FS responses are included. Note that, at this stage,
+"pp" needs to be included, and so is added even if missing from \code{type}. Default is \code{c("pp", "scores")}.}
 
 \item{save}{logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.}
 
-\item{save_format}{'pdf' or 'png'. Plot device to use. Default is 'png'.}
+\item{save_format}{"pdf" or "png". Plot device to use. Default is "png".}
 
 \item{prob_min, quant_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
 of samples that a cytokine combination must have to be included. For example,
@@ -71,6 +69,15 @@ are not. Default is \code{FALSE}.}
 vertically along the annotation grid is given by this vector (with first element going at the bottom).
 If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Default is \code{NULL}.}
 
+\item{file_grid, file_ind}{character (vector).
+Names for grid plot and individual plots, respectively, to be saved as.
+If \\code{is.null(file)}, then the grid plot is
+simply named \code{compass_boxplots_grid}.
+If \\code{is.null(file_ind)}, then each element
+has its name taken from the corresponding list name in \code{c_obj}.
+If \code{file_ind} is named, then the names of \code{c_obj}
+are used to map onto elements of \code{file_ind}.}
+
 \item{plot_prob_fill}{character. If a colour, then the boxplots are filled according
 to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
@@ -86,7 +93,7 @@ Default is \code{0}.}
 squeeze the scores plot in. The first element controls the bottom position of the plot,
 and the second the top. For both elements, a positive value means moving upwards. A value of zero corresponds no shift.
 Typically the bottom element and top element should both be shifted down (and therefore have negative values).
-Only applies if type includes both \code{'pp'} and \code{'scores'}.
+Only applies if type includes both \code{"pp"} and \code{"scores"}.
 Default is \code{c(0,0)}.}
 
 \item{shift_plot_pp_y}{[0,1]. Specifies amount by which to shift the upper point of the probability plot upwards.
@@ -110,10 +117,10 @@ If \code{c_obj} is not a list, then no label is printed, regardless of the
 value of \code{label}. Default is \code{TRUE}.}
 
 \item{return_plot_list}{logical. If \code{TRUE}, then a named list of the plots used to create the figure are returned. The
-first element is \code{'p_grid'} for the cytokine grid plot. The second element is \code{'p_probs'}  for
-a list of the posterior probability plots. The third element is named \code{'p_scores'}, and has sub-elements that
-are the plots of the PFS and FS responses for each group. The \code{'p_scores'} element is only supplied if \code{'scores'} is
-in \code{'type'}.}
+first element is \code{"p_grid"} for the cytokine grid plot. The second element is \code{"p_probs"}  for
+a list of the posterior probability plots. The third element is named \code{"p_scores"}, and has sub-elements that
+are the plots of the PFS and FS responses for each group. The \code{"p_scores"} element is only supplied if \code{"scores"} is
+in \code{"type"}.}
 
 \item{facet}{logical vector. Whether to facet or save individual plots for each
 group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved.
@@ -141,16 +148,9 @@ Default is \code{FALSE}.}
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 
-\item{plot_scores_lims_y}{numeric vector of length 2. If not \code{NULL}, specifies the y-axis range for the scores plots.
+\item{plot_scores_lims_y}{numeric vector of length 2.
+If not \code{NULL}, specifies the y-axis range for the scores plots.
 Default is \code{NULL}.}
-
-\item{file}{character. Name of saved plot. If \code{NULL}, then
-set to `compass_boxplots`.}
-
-\item{file, file_ind}{character (vector). Names for grid plot and individual plots, respectively, to be saved as.
-If \\code{is.null(file)}, then the grid plot is simply named \code{compass_boxplots_grid}.
-If \\code{is.null(file_ind)}, then each element has its name taken from the corresponding list name in \code{c_obj}.
-If \code{file_ind} is named, then the names of \code{c_obj} are used to map onto elements of \code{file_ind}.}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.
@@ -159,13 +159,16 @@ A list, where each element is a \code{ggplot2} object.
 Plot COMPASS posterior probabilities as boxplots, and the PFS scores if desired.
 A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
 y-axis scales and cytokine combinations displayed fixed across plots.
+
+' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
+COMPASS data to plot.
 }
 \examples{
 library(compassutils)
-data('c_obj_list', package = 'compassutils')
+data("c_obj_list", package = "compassutils")
 plot_compass(
 c_obj = c_obj_list,
-type = c('pp', 'scores'),
+type = c("pp", "scores"),
 return_plot_list = FALSE,
 shift_plot_scores = c(-0.05, 0.05),
 shift_plot_pp_y = -0.075,
@@ -174,15 +177,16 @@ shift_plot_heatmap_x = 0.052
 The plot will then be saved to the working directory.
 
 Can also use Greek symbols for cytokines:
-get_cyt_lab <- function(cyt){
-  lapply(cyt, function(cyt_ind){
+get_cyt_lab <- function(cyt) {
+  lapply(cyt, function(cyt_ind) {
   switch(cyt_ind,
-  "IFNg" = bquote('IFN'~gamma),
+  "IFNg" = bquote("IFN"~gamma),
   cyt_ind)
   })
  }
- plot_compass(c_obj_list[1], type = c('pp'),
+ plot_compass(c_obj_list[1], type = c("pp"),
  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
- shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052, cyt_lab = get_cyt_lab)
+ shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052,
+ cyt_lab = get_cyt_lab)
 
 }

@@ -10,7 +10,8 @@
   boxplot_width,
   boxplot_width_pp,
   boxplot_width_scores,
-  plot_scores_lims_y
+  plot_scores_lims_y,
+  font_size
 )
 }
 \arguments{
@@ -31,7 +32,8 @@ Default is \code{NULL}.}
 to force the widths of the boxplots to be constant across elements in \code{c_obj}.
 Default is \code{NULL}.}
 
-\item{plot_scores_lims_y}{numeric vector of length 2. If not \code{NULL}, specifies the y-axis range for the scores plots.
+\item{plot_scores_lims_y}{numeric vector of length 2.
+If not \code{NULL}, specifies the y-axis range for the scores plots.
 Default is \code{NULL}.}
 }
 \value{

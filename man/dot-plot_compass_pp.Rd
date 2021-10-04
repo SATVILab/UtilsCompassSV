@@ -14,7 +14,8 @@
   plot_prob_fill,
   facet,
   cyt_lab,
-  boxplot_width
+  boxplot_width,
+  font_size
 )
 }
 \arguments{

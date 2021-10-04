@@ -10,9 +10,8 @@
 #' of \code{c_obj}, where each element is the corresponding
 #' boxplot of PFS and FS scores.
 .plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
-                                 boxplot_width_pp,
-                                 boxplot_width_scores,
-                                 plot_scores_lims_y){
+                                 plot_scores_lims_y,
+                                 font_size){
 
   # prep
   score_tbl <- purrr::map_df(seq_along(c_obj), function(i){
@@ -41,7 +40,7 @@
            aes(x = score_type, y = score, fill = .grp)) +
       geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50',
                    width = boxplot_width) +
-      cowplot::theme_cowplot() +
+      cowplot::theme_cowplot(font_size = font_size) +
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
@@ -63,7 +62,7 @@
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab, boxplot_width){
+                             cyt_lab, boxplot_width, font_size){
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i){
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -173,9 +172,9 @@
   # --------------------
 
   # grid
-  col_vec <- RColorBrewer::brewer.pal(n = length(cyt_order),
+  col_vec <- RColorBrewer::brewer.pal(n = length(cyt_order) + 2,
                                       name = "YlOrBr")
-  col_vec <- col_vec[-(1:((length(col_vec) - max(as.numeric(grid_tbl$degree)))))]
+  col_vec <- col_vec[-c(1, length(cyt_order))]
   expr_degree_lab_vec <- setNames(col_vec, paste0("TRUE", 1:length(col_vec)))
   expr_degree_lab_vec <- c(expr_degree_lab_vec, setNames(rep('white', length(col_vec)),
                                                          paste0("FALSE", 1:length(col_vec))))
@@ -187,7 +186,7 @@
                      dplyr::mutate(expr_degree = paste0(expressed, degree)),
                    aes(x = combn, y = cyt,
                        fill = expr_degree)) +
-    cowplot::theme_cowplot() +
+    cowplot::theme_cowplot(font_size = font_size) +
     #geom_raster(col = 'black', linetype = 'solid') +
     geom_tile(col = 'black') +
     scale_fill_manual(values = expr_degree_lab_vec) +
@@ -214,7 +213,7 @@
     p <- ggplot(pp_tbl %>%
                   dplyr::filter(.grp == grp_curr),
                 aes(x = combn, y = prob, fill = .grp)) +
-      cowplot::theme_cowplot() +
+      cowplot::theme_cowplot(font_size = font_size) +
       cowplot::background_grid(major = 'y') +
       geom_boxplot(outlier.size = 0.25, outlier.colour = 'gray50',
                    width = boxplot_width) +

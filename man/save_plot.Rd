@@ -11,10 +11,7 @@
 
 \item{dir_save}{character. Where to save the output. Default is working directory.}
 
-\item{file}{character. Name of saved plot. If \code{NULL}, then
-set to `compass_boxplots`.}
-
-\item{save_format}{'pdf' or 'png'. Plot device to use. Default is 'png'.}
+\item{save_format}{"pdf" or "png". Plot device to use. Default is "png".}
 
 \item{n_row, n_col}{integer. Number of objects plotted per row and column.
 Determines \code{width} and \code{height} if they are \code{NULL}.}
