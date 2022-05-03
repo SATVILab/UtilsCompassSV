@@ -168,26 +168,28 @@ COMPASS data to plot.
 library(UtilsCompassSV)
 data("c_obj_list", package = "UtilsCompassSV")
 plot_compass(
-c_obj = c_obj_list,
-type = c("pp", "scores"),
-return_plot_list = FALSE,
-shift_plot_scores = c(-0.05, 0.05),
-shift_plot_pp_y = -0.075,
-shift_plot_heatmap_x = 0.052
+  c_obj = c_obj_list,
+  type = c("pp", "scores"),
+  return_plot_list = FALSE,
+  shift_plot_scores = c(-0.05, 0.05),
+  shift_plot_pp_y = -0.075,
+  shift_plot_heatmap_x = 0.052
 )
-The plot will then be saved to the working directory.
+# The plot will then be saved to the working directory.
 
-Can also use Greek symbols for cytokines:
+# Can also use Greek symbols for cytokines:
 get_cyt_lab <- function(cyt) {
   lapply(cyt, function(cyt_ind) {
-  switch(cyt_ind,
-  "IFNg" = bquote("IFN"~gamma),
-  cyt_ind)
+    switch(cyt_ind,
+      "IFNg" = bquote("IFN" ~ gamma),
+      cyt_ind
+    )
   })
- }
- plot_compass(c_obj_list[1], type = c("pp"),
- return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
- shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052,
- cyt_lab = get_cyt_lab)
-
+}
+plot_compass(c_obj_list[1],
+  type = c("pp"),
+  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+  shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052,
+  cyt_lab = get_cyt_lab
+)
 }

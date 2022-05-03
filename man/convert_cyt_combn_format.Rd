@@ -43,7 +43,6 @@ Convert cytokine combination format between COMPASS format and "standard " +/- f
 See \code{cyt_combn} parameter for details. NOTE: At present only converts from COMPASS to standard format.
 }
 \examples{
-convert_cyt_combn_format(c("IFNg&!IL2"), to = 'std')
-convert_cyt_combn_format(c("IFNg+IL2-"), to = 'compass')
-
+convert_cyt_combn_format(c("IFNg&!IL2"), to = "std")
+convert_cyt_combn_format(c("IFNg+IL2-"), to = "compass")
 }

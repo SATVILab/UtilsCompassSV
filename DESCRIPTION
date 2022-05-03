@@ -26,5 +26,6 @@ Imports:
     tidyr,
     cowplot,
     COMPASS,
-    RColorBrewer
+    RColorBrewer,
+    ggplot2
 RoxygenNote: 7.1.2
