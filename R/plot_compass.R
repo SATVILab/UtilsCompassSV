@@ -102,72 +102,74 @@
 #' library(UtilsCompassSV)
 #' data("c_obj_list", package = "UtilsCompassSV")
 #' plot_compass(
-#' c_obj = c_obj_list,
-#' type = c("pp", "scores"),
-#' return_plot_list = FALSE,
-#' shift_plot_scores = c(-0.05, 0.05),
-#' shift_plot_pp_y = -0.075,
-#' shift_plot_heatmap_x = 0.052
+#'   c_obj = c_obj_list,
+#'   type = c("pp", "scores"),
+#'   return_plot_list = FALSE,
+#'   shift_plot_scores = c(-0.05, 0.05),
+#'   shift_plot_pp_y = -0.075,
+#'   shift_plot_heatmap_x = 0.052
 #' )
-#' The plot will then be saved to the working directory.
+#' # The plot will then be saved to the working directory.
 #'
-#' Can also use Greek symbols for cytokines:
+#' # Can also use Greek symbols for cytokines:
 #' get_cyt_lab <- function(cyt) {
 #'   lapply(cyt, function(cyt_ind) {
-#'   switch(cyt_ind,
-#'   "IFNg" = bquote("IFN"~gamma),
-#'   cyt_ind)
+#'     switch(cyt_ind,
+#'       "IFNg" = bquote("IFN" ~ gamma),
+#'       cyt_ind
+#'     )
 #'   })
-#'  }
-#'  plot_compass(c_obj_list[1], type = c("pp"),
-#'  return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
-#'  shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052,
-#'  cyt_lab = get_cyt_lab)
-#'
+#' }
+#' plot_compass(c_obj_list[1],
+#'   type = c("pp"),
+#'   return = FALSE, shift_plot_scores = c(-0.05, 0.05), facet = FALSE,
+#'   shift_plot_pp_y = -0.05, shift_plot_heatmap_x = 0.052,
+#'   cyt_lab = get_cyt_lab
+#' )
 #' @importFrom rlang !! ensym
 #' @import ggplot2
-plot_compass <- function(
-  c_obj,
-  dir_save = getwd(),
-  type = c("pp", "scores"),
-  save = TRUE,
-  save_format = "png",
-  prob_min = 0.8,
-  quant_min = 0.25,
-  boxplot_width_scores = NULL,
-  boxplot_width_pp = NULL,
-  silent = FALSE,
-  cyt_order = NULL,
-  file_grid = NULL,
-  file_ind = NULL,
-  plot_prob_fill = NULL,
-  shift_plot_heatmap_x = 0,
-  shift_plot_scores_y = c(0, 0),
-  shift_plot_pp_y = 0,
-  shift_label = c(0.05, -0.04),
-  prop_pp = c(0.7, 0.7),
-  label = TRUE,
-  return_plot_list = TRUE,
-  facet = FALSE,
-  n_col = NULL,
-  cyt_lab = NULL,
-  save_grid = TRUE,
-  height_grid = NULL,
-  width_grid = NULL,
-  save_ind = FALSE,
-  font_size = 14,
-  height_ind = NULL,
-  width_ind = NULL,
-  plot_scores_lims_y = NULL,
-  font_size_labels = 14) {
+plot_compass <- function(c_obj,
+                         dir_save = getwd(),
+                         type = c("pp", "scores"),
+                         save = TRUE,
+                         save_format = "png",
+                         prob_min = 0.8,
+                         quant_min = 0.25,
+                         boxplot_width_scores = NULL,
+                         boxplot_width_pp = NULL,
+                         silent = FALSE,
+                         cyt_order = NULL,
+                         file_grid = NULL,
+                         file_ind = NULL,
+                         plot_prob_fill = NULL,
+                         shift_plot_heatmap_x = 0,
+                         shift_plot_scores_y = c(0, 0),
+                         shift_plot_pp_y = 0,
+                         shift_label = c(0.05, -0.04),
+                         prop_pp = c(0.7, 0.7),
+                         label = TRUE,
+                         return_plot_list = TRUE,
+                         facet = FALSE,
+                         n_col = NULL,
+                         cyt_lab = NULL,
+                         save_grid = TRUE,
+                         height_grid = NULL,
+                         width_grid = NULL,
+                         save_ind = FALSE,
+                         font_size = 14,
+                         height_ind = NULL,
+                         width_ind = NULL,
+                         plot_scores_lims_y = NULL,
+                         font_size_labels = 14) {
 
   # prep
   # -------------------
 
   init_list <- is.list(c_obj)
   init_name_vec <- switch(as.character(init_list),
-                          "TRUE" = names(c_obj),
-                          "FALSE" = NULL)
+    "TRUE" = names(c_obj),
+    "FALSE" = NULL
+  )
   if (is.factor(type)) type <- as.character(type)
   if (!"pp" %in% type) type <- c(type, "pp")
 
@@ -218,8 +220,10 @@ plot_compass <- function(
       plot_prob_fill = plot_prob_fill,
       plot_scores_lims_y = plot_scores_lims_y,
       font_size = font_size
-      )
-  } else p_list_scores <- NULL
+    )
+  } else {
+    p_list_scores <- NULL
+  }
 
   # save individaul plots
   if (save_ind) {
@@ -238,7 +242,7 @@ plot_compass <- function(
       n_col = 1,
       shift_label = shift_label,
       font_size_labels = font_size_labels
-      )
+    )
   }
 
   if (save_grid) {
@@ -261,7 +265,9 @@ plot_compass <- function(
   }
 
 
-  if (!return_plot_list) return(invisible(TRUE))
+  if (!return_plot_list) {
+    return(invisible(TRUE))
+  }
 
   p_list_pp %>%
     append(

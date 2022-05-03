@@ -26,19 +26,16 @@
                          n_col,
                          shift_label,
                          font_size_labels) {
-
   n_grp <- ifelse(ind, 1, length(p_list_pp$p_probs))
   scores_ind <- !is.null(p_list_scores)
   prop_pp[1] <- ifelse(!scores_ind, 1, prop_pp)
   n_col <- ifelse(is.null(n_col), min(2, n_grp), n_col)
   n_row <- ceiling(n_grp / n_col)
-  col_ind_vec <- switch(
-    as.character(ind),
+  col_ind_vec <- switch(as.character(ind),
     "TRUE" = rep(1, length(p_list_pp$p_probs)),
     "FALSE" = rep(seq_len(n_col), n_row)[seq_len(n_grp)]
   )
-  row_ind_vec <- switch(
-    as.character(ind),
+  row_ind_vec <- switch(as.character(ind),
     "TRUE" = rep(1, length(p_list_pp$p_probs)),
     "FALSE" = rep(seq_len(n_row), each = n_col)[seq_len(n_grp)]
   )
@@ -125,12 +122,16 @@
         if (length(file) == length(p_list_pp$p_probs)) {
           if (is.null(names(file))) {
             fn_curr <- file[i]
-          } else{
+          } else {
             fn_curr <- file[names(p_list_pp$p_probs)[i]]
             if (is.na(fn_curr)) fn_curr <- NULL
           }
-        } else fn_curr <- NULL
-      } else fn_curr <- NULL
+        } else {
+          fn_curr <- NULL
+        }
+      } else {
+        fn_curr <- NULL
+      }
       if (is.null(fn_curr)) {
         fn_curr <- paste0(
           "compass_boxplots-",
@@ -142,20 +143,26 @@
         )
       }
 
-      .save_plot(p = p, height = height, width = width, dir_save = dir_save,
-                 file = fn_curr,
-                 save_format = save_format,
-                 n_row = 1, n_col = 1)
+      .save_plot(
+        p = p, height = height, width = width, dir_save = dir_save,
+        file = fn_curr,
+        save_format = save_format,
+        n_row = 1, n_col = 1
+      )
     }
   }
 
   # if saving individual plots, exit now
-  if (ind) return(invisible(TRUE))
+  if (ind) {
+    return(invisible(TRUE))
+  }
 
-  .save_plot(p = p, height = height, width = width,
-             dir_save = dir_save, file = file,
-             save_format = save_format,
-             n_row = n_col, n_col = n_col)
+  .save_plot(
+    p = p, height = height, width = width,
+    dir_save = dir_save, file = file,
+    save_format = save_format,
+    n_row = n_col, n_col = n_col
+  )
 
   invisible(TRUE)
 }

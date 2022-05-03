@@ -23,58 +23,79 @@
 #' @export
 #'
 #' @examples
-#' convert_cyt_combn_format(c("IFNg&!IL2"), to = 'std')
-#' convert_cyt_combn_format(c("IFNg+IL2-"), to = 'compass')
-#'
+#' convert_cyt_combn_format(c("IFNg&!IL2"), to = "std")
+#' convert_cyt_combn_format(c("IFNg+IL2-"), to = "compass")
 #' @importFrom magrittr %>% %<>%
 convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALSE,
-                                     check = TRUE, lab = NULL){
+                                     check = TRUE, lab = NULL) {
 
   # prep
   # ------------------
 
-  if(missing(cyt_combn)) stop("cyt_combn must be specified",
-                              call. = FALSE)
+  if (missing(cyt_combn)) {
+    stop("cyt_combn must be specified",
+      call. = FALSE
+    )
+  }
 
-  if(!is.character(cyt_combn) && !is.factor(cyt_combn)) stop("cyt_combn must be a character or factor.",
-                                                             call. = FALSE)
+  if (!is.character(cyt_combn) && !is.factor(cyt_combn)) {
+    stop("cyt_combn must be a character or factor.",
+      call. = FALSE
+    )
+  }
 
   # checks
-  if(missing(to)) stop("must specify `to` parameters",
-                       call. = FALSE)
-  if(!to %in% c("compass", "std")) stop("`to` parameter must be either 'compass' or 'std'",
-                                        call. = FALSE)
+  if (missing(to)) {
+    stop("must specify `to` parameters",
+      call. = FALSE
+    )
+  }
+  if (!to %in% c("compass", "std")) {
+    stop("`to` parameter must be either 'compass' or 'std'",
+      call. = FALSE
+    )
+  }
 
-  if(!is.logical(force)) stop("force parameter must be of class logical",
-                              call. = FALSE)
-  if(!is.logical(silent)) stop("silent parameter must be of class logical",
-                               call. = FALSE)
+  if (!is.logical(force)) {
+    stop("force parameter must be of class logical",
+      call. = FALSE
+    )
+  }
+  if (!is.logical(silent)) {
+    stop("silent parameter must be of class logical",
+      call. = FALSE
+    )
+  }
 
 
   # convert
   # -------------------
 
-  if(to == 'std'){
+  if (to == "std") {
 
     # check for ampersands, if conversion not forced
-    if(!force){
-      if(!stringr::str_detect(cyt_combn[1], "&")){
-        if(!silent){
+    if (!force) {
+      if (!stringr::str_detect(cyt_combn[1], "&")) {
+        if (!silent) {
           warning("No &'s detected in cyt_combn, and so no conversion to compass format done as force != TRUE")
         }
         return(cyt_combn)
-      } else NULL
-    } else NULL
+      } else {
+        NULL
+      }
+    } else {
+      NULL
+    }
 
     # convert
-    out_vec <- purrr::map_chr(cyt_combn, function(x){
-      purrr::map_chr(stringr::str_split(x, "&")[[1]], function(elem){
-        if(stringr::str_detect(elem, "[[!]]")){
+    out_vec <- purrr::map_chr(cyt_combn, function(x) {
+      purrr::map_chr(stringr::str_split(x, "&")[[1]], function(elem) {
+        if (stringr::str_detect(elem, "[[!]]")) {
           cyt <- stringr::str_sub(elem, start = 2)
-          if(!is.null(lab)) cyt <- lab[cyt]
+          if (!is.null(lab)) cyt <- lab[cyt]
           return(paste0(cyt, "-"))
         }
-        if(!is.null(lab)) elem <- lab[elem]
+        if (!is.null(lab)) elem <- lab[elem]
         paste0(elem, "+")
       }) %>%
         unlist() %>%
@@ -82,38 +103,39 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
     })
 
     # check
-    if(check){
-      n_cyt <- purrr::map_dbl(out_vec, function(x){
+    if (check) {
+      n_cyt <- purrr::map_dbl(out_vec, function(x) {
         cyt_vec <- stringr::str_split(x, "[[+-]]")[[1]]
         len <- length(cyt_vec)
         cyt_vec <- cyt_vec[-len]
-        if(any(cyt_vec == "")){
+        if (any(cyt_vec == "")) {
           stop("At least one cytokine is a character of length zero after conversion.")
         }
-        len-1
+        len - 1
       }) %>%
         unique()
-      if(length(n_cyt) != 1){
+      if (length(n_cyt) != 1) {
         stop(paste0("intended output has differing numbers of cytokines in for each cytokine combination."),
-             call. = FALSE)
+          call. = FALSE
+        )
       }
     }
-  } else if(to == 'compass'){
+  } else if (to == "compass") {
     # convert
-    out_vec <- purrr::map_chr(cyt_combn, function(x){
+    out_vec <- purrr::map_chr(cyt_combn, function(x) {
       cyt_vec <- stringr::str_split(x, "[[+-]]")[[1]]
       cyt_vec <- cyt_vec[cyt_vec != ""]
-      if(!is.null(lab)) cyt_vec <- lab[cyt_vec]
+      if (!is.null(lab)) cyt_vec <- lab[cyt_vec]
       level_vec <- stringr::str_split(x, "\\w")[[1]]
       level_vec <- level_vec[level_vec != ""]
       out <- cyt_vec[1]
-      if(identical(level_vec[1], "-")) out <- paste0("!", out)
+      if (identical(level_vec[1], "-")) out <- paste0("!", out)
       cyt_vec <- cyt_vec[-1]
       level_vec <- level_vec[-1]
-      for(i in seq_along(cyt_vec)){
-        if(identical(level_vec[i], "+")){
+      for (i in seq_along(cyt_vec)) {
+        if (identical(level_vec[i], "+")) {
           out <- paste0(out, "&", cyt_vec[i])
-        } else{
+        } else {
           out <- paste0(out, "&!", cyt_vec[i])
         }
       }
@@ -122,5 +144,4 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
   }
 
   out_vec
-
 }

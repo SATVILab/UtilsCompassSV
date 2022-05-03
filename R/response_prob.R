@@ -19,15 +19,17 @@
 #' @return A dataframe with columns sampleid and prob.
 #'
 #' @examples
-#' data('c_obj', package = 'UtilsCompassSV')
+#' data("c_obj", package = "UtilsCompassSV")
 #' response_prob(c_obj = c_obj)
 #' response_prob(
-#' c_obj = c_obj,
-#' exc = c('IFNg&IL2&TNF&!IL17&!IL6&!IL22',
-#' 'IFNg&!IL2&TNF&!IL17&!IL6&!IL22')
-#'
+#'   c_obj = c_obj,
+#'   exc = c(
+#'     "IFNg&IL2&TNF&!IL17&!IL6&!IL22",
+#'     "IFNg&!IL2&TNF&!IL17&!IL6&!IL22"
+#'   )
+#' )
 #' @export
-response_prob <- function(c_obj, exc = NULL){
+response_prob <- function(c_obj, exc = NULL) {
   prob_mat <- c_obj$fit$mean_gamma
   sampleid_vec <- rownames(prob_mat)
   prob_tbl <- prob_mat %>%
@@ -38,50 +40,56 @@ response_prob <- function(c_obj, exc = NULL){
     colnames(prob_tbl)[2],
     "&"
   )[[1]]
-  cyt_vec <- purrr::map_chr(cyt_vec, function(cyt){
-    if(stringr::str_sub(cyt, 1, 1) != "!") return(cyt)
+  cyt_vec <- purrr::map_chr(cyt_vec, function(cyt) {
+    if (stringr::str_sub(cyt, 1, 1) != "!") {
+      return(cyt)
+    }
     stringr::str_sub(cyt, start = 2)
   })
   all_neg_cyt_combn <- paste0("!", cyt_vec,
-                              collapse = "&")
+    collapse = "&"
+  )
   n_cyt_combn_max <- 2^length(cyt_vec)
 
-  prob_tbl <- prob_tbl[,-which(
+  prob_tbl <- prob_tbl[, -which(
     stringr::str_detect(
       colnames(prob_tbl),
       all_neg_cyt_combn
-      )
+    )
   )]
 
-  if(!ncol(prob_tbl) == n_cyt_combn_max){
+  if (!ncol(prob_tbl) == n_cyt_combn_max) {
     stop(paste0(
       "removing all neg cyt combn (calculated as ",
       all_neg_cyt_combn,
-      ") failed. Please notify package maintainer at rdxmig002@myuct.ac.za."))
+      ") failed. Please notify package maintainer at rdxmig002@myuct.ac.za."
+    ))
   }
 
-  if(!is.null(exc)){
+  if (!is.null(exc)) {
     # check for matches
-    purrr::walk(exc, function(x){
+    purrr::walk(exc, function(x) {
       cn_vec <- colnames(prob_tbl)[-1]
       len_vec <- unique(stringr::str_length(cn_vec))
-      if(!stringr::str_length(x) %in%
-         len_vec){
+      if (!stringr::str_length(x) %in%
+        len_vec) {
         stop(paste0(x, " is in exc but not in cyt combns of COMPASS object"),
-             call. = FALSE)
+          call. = FALSE
+        )
       }
-      match_ind <- purrr::map_lgl(cn_vec, function(cn){
+      match_ind <- purrr::map_lgl(cn_vec, function(cn) {
         stringr::str_detect(cn, x)
       }) %>%
         any()
-      if(!match_ind){
+      if (!match_ind) {
         stop(paste0(x, " is in exc but not in cyt combns of COMPASS object"),
-             call. = FALSE)
+          call. = FALSE
+        )
       }
     })
 
-    for(x in exc){
-      prob_tbl <- prob_tbl[,-which(
+    for (x in exc) {
+      prob_tbl <- prob_tbl[, -which(
         stringr::str_detect(
           colnames(prob_tbl),
           x
@@ -93,7 +101,7 @@ response_prob <- function(c_obj, exc = NULL){
       )]
     }
 
-    if(ncol(prob_tbl) != (n_cyt_combn_max - length(exc))){
+    if (ncol(prob_tbl) != (n_cyt_combn_max - length(exc))) {
       stop("Did not remove as many cytokine combinations from COMPASS object as in exc")
     }
   }
@@ -101,15 +109,18 @@ response_prob <- function(c_obj, exc = NULL){
   prob_tbl %>%
     tidyr::pivot_longer(
       -sampleid,
-      names_to = 'cyt_combn',
-      values_to = 'prob') %>%
+      names_to = "cyt_combn",
+      values_to = "prob"
+    ) %>%
     dplyr::filter(
       !stringr::str_detect(
         cyt_combn,
         all_neg_cyt_combn
-        )
-      ) %>%
+      )
+    ) %>%
     dplyr::group_by(sampleid) %>%
-    dplyr::summarise(prob = 1 - prod(1 - prob),
-                     .groups = 'drop')
+    dplyr::summarise(
+      prob = 1 - prod(1 - prob),
+      .groups = "drop"
+    )
 }
