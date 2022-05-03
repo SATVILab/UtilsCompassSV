@@ -4,6 +4,8 @@
 # UtilsCompassSV
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/SATVILab/compassutils/workflows/R-CMD-check/badge.svg)](https://github.com/SATVILab/compassutils/actions)
 <!-- badges: end -->
 
 The goal of UtilsCompassSV is to supply useful plotting and utility
