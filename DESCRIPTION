@@ -1,4 +1,4 @@
-Package: compassutils
+Package: UtilsCompassSV
 Type: Package
 Title: Utility functions to plot and work with COMPASS output
 Version: 0.1.0
@@ -27,4 +27,4 @@ Imports:
     cowplot,
     COMPASS,
     RColorBrewer
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

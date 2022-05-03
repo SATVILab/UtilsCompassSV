@@ -1,22 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# compassutils
+# UtilsCompassSV
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of compassutils is to supply useful plotting and utility
+The goal of UtilsCompassSV is to supply useful plotting and utility
 functions for working with output from COMPASS.
 
 ## Installation
 
-You can install the latest version of compassutils from
+You can install the latest version of UtilsCompassSV from
 [GitHub](https://www.github.com) with
 
 ``` r
-if(!require("devtools", quietly = TRUE)) install.packages('devtools')
-devtools::install_github("SATVILab/compassutils")
+if (!require("remotes", quietly = TRUE)) install.packages("remotes")
+remotes::install_github("SATVILab/UtilsCompassSV")
 ```
 
 ## Example
@@ -31,15 +31,15 @@ for all “groups” plotted together. Note that the PFS and FS scores plot
 need not be added.
 
 ``` r
-library(compassutils)
-data('c_obj_list', package = 'compassutils')
+library(UtilsCompassSV)
+data('c_obj_list', package = 'UtilsCompassSV')
 plot_compass(
-  c_obj = c_obj_list, 
+  c_obj = c_obj_list,
   dir_save = here::here('data-raw'),
   type = c('pp', 'scores'),
-  return_plot_list = FALSE, 
-  shift_plot_scores = c(-0.05, 0.05), 
-  shift_plot_pp_y = -0.075, 
+  return_plot_list = FALSE,
+  shift_plot_scores = c(-0.05, 0.05),
+  shift_plot_pp_y = -0.075,
   shift_plot_heatmap_x = 0.052
   )
 knitr::include_graphics('data-raw/compass_boxplots_grid.png')
@@ -56,11 +56,11 @@ COMPASS “!&” format. Can also label cytokines/markers.
 cyt_combn_vec_compass <- c("IFNg&!IL2&TNF&IL6&!IL22",
                            "IFNg&IL2&TNF&IL6&IL22",
                            "!IFNg&!IL2&!TNF&!IL6&!IL22")
-cyt_combn_vec_std <- compassutils::convert_cyt_combn_format(cyt_combn_vec_compass, 
+cyt_combn_vec_std <- UtilsCompassSV::convert_cyt_combn_format(cyt_combn_vec_compass,
                                                             to = 'std')
 pander::pandoc.table(tibble::tibble(
-  `COMPASS format` = cyt_combn_vec_compass, 
-  `Standard format` = cyt_combn_vec_std 
+  `COMPASS format` = cyt_combn_vec_compass,
+  `Standard format` = cyt_combn_vec_std
   ))
 ```
 

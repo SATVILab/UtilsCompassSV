@@ -19,7 +19,7 @@
 #' @return A dataframe with columns sampleid and prob.
 #'
 #' @examples
-#' data('c_obj', package = 'compassutils')
+#' data('c_obj', package = 'UtilsCompassSV')
 #' response_prob(c_obj = c_obj)
 #' response_prob(
 #' c_obj = c_obj,

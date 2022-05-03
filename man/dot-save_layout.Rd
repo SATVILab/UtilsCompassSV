@@ -19,7 +19,8 @@
   save_format,
   label,
   n_col,
-  shift_label
+  shift_label,
+  font_size_labels
 )
 }
 \arguments{
@@ -29,11 +30,11 @@ and PFS plots are saved individually.}
 
 \item{p_list_pp}{list of \code{ggplot2} objects.
 Posterior probability plots and associated
-cytokine-label grids, as returned by \code{compassutils:::.plot_compass_pp}.}
+cytokine-label grids, as returned by \code{UtilsCompassSV:::.plot_compass_pp}.}
 
 \item{p_list_scores}{list of \code{ggplot2} objects.
 PFS and FS response plots, as
-returned by \code{compassutils:::.plot_compass_scores}.}
+returned by \code{UtilsCompassSV:::.plot_compass_scores}.}
 
 \item{prop_pp}{numeric vector, values in \code{[0,1]}. Specifies coordinate-wise the proportion of plot region
 for a single group in \code{c_obj} (if \code{c_obj} is a list; otherwise it's simply the proportion of the

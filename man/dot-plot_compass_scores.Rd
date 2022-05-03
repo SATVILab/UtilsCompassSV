@@ -8,8 +8,6 @@
   c_obj,
   plot_prob_fill,
   boxplot_width,
-  boxplot_width_pp,
-  boxplot_width_scores,
   plot_scores_lims_y,
   font_size
 )
@@ -21,16 +19,6 @@
 to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
-
-\item{boxplot_width_pp}{numeric. If not \code{NULL}, then supplied to \code{width} parameter of
-\code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
-to force the widths of the boxplots to be constant across elements in \code{c_obj}.
-Default is \code{NULL}.}
-
-\item{boxplot_width_scores}{numeric. If not \code{NULL}, then supplied to \code{width} parameter of
-\code{geom_boxplot} for the posterior probability and scores plots, respectively. Purpose is
-to force the widths of the boxplots to be constant across elements in \code{c_obj}.
-Default is \code{NULL}.}
 
 \item{plot_scores_lims_y}{numeric vector of length 2.
 If not \code{NULL}, specifies the y-axis range for the scores plots.

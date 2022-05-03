@@ -1,5 +1,5 @@
 test_that("plot_compass works", {
-  data("c_obj_list", package = "compassutils")
+  data("c_obj_list", package = "UtilsCompassSV")
   fn_vec <- c(
     "compass_boxplots_grid.png",
     "compass_boxplots-EBV_CMV.png",
@@ -24,7 +24,7 @@ test_that("plot_compass works", {
   )
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
   rm_fn()
-  data("c_obj_list", package = "compassutils")
+  data("c_obj_list", package = "UtilsCompassSV")
 
   # debugonce(plot_compass)
   plot_compass(
@@ -151,7 +151,7 @@ test_that("plot_compass works", {
   }
 
 
-  # debugonce(compassutils:::.plot_compass_pp)
+  # debugonce(UtilsCompassSV:::.plot_compass_pp)
 
   plot_compass(c_obj_list[1],
     dir_save = tempdir(), type = c("pp"),

@@ -1,5 +1,5 @@
 test_that("response_prob works", {
-  data('c_obj', package = 'compassutils')
+  data('c_obj', package = 'UtilsCompassSV')
   prob_tbl <- response_prob(c_obj = c_obj)
   prob_vec_54 <- c_obj$fit$mean_gamma[54,]
   prob_vec_54 <- prob_vec_54[-which(names(prob_vec_54) == "!IFNg&!IL2&!TNF&!IL17&!IL6&!IL22")]

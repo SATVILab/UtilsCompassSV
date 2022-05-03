@@ -36,7 +36,8 @@ plot_compass(
   font_size = 14,
   height_ind = NULL,
   width_ind = NULL,
-  plot_scores_lims_y = NULL
+  plot_scores_lims_y = NULL,
+  font_size_labels = 14
 )
 }
 \arguments{
@@ -138,13 +139,13 @@ This will change the label for \code{"IFNg"} but leave all the others as is.}
 \item{save_grid}{logical. If \code{TRUE}, then a grid of all individual elements in \code{c_obj} are saved.
 Default is \code{TRUE}.}
 
-\item{height_grid, width_grid}{numeric. Height and width, respectively (of course), of the saved figure (if saved). If
+\item{height_grid, width_grid}{numeric. Height and width, respectively, in centimetres of the saved figure (if saved). If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 
 \item{save_ind}{logical. If \code{TRUE}, then plots for individual elements in \code{c_obj} are saved.
 Default is \code{FALSE}.}
 
-\item{height_ind, width_ind}{numeric. Height and width, respectively (of course), of the saved figure (if saved),
+\item{height_ind, width_ind}{numeric. Height and width, respectively, in centimetres of the saved figure (if saved),
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
 
@@ -164,8 +165,8 @@ y-axis scales and cytokine combinations displayed fixed across plots.
 COMPASS data to plot.
 }
 \examples{
-library(compassutils)
-data("c_obj_list", package = "compassutils")
+library(UtilsCompassSV)
+data("c_obj_list", package = "UtilsCompassSV")
 plot_compass(
 c_obj = c_obj_list,
 type = c("pp", "scores"),

@@ -30,7 +30,7 @@ combination and the product is taken over all cytokine combinations
 except the all-negative cytokine combination.
 }
 \examples{
-data('c_obj', package = 'compassutils')
+data('c_obj', package = 'UtilsCompassSV')
 response_prob(c_obj = c_obj)
 response_prob(
 c_obj = c_obj,

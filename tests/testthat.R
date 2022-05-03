@@ -1,4 +1,4 @@
 library(testthat)
-library(compassutils)
+library(UtilsCompassSV)
 
-test_check("compassutils")
+test_check("UtilsCompassSV")

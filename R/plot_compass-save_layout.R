@@ -6,11 +6,11 @@
 #' @param p_list_pp
 #' list of \code{ggplot2} objects.
 #' Posterior probability plots and associated
-#' cytokine-label grids, as returned by \code{compassutils:::.plot_compass_pp}.
+#' cytokine-label grids, as returned by \code{UtilsCompassSV:::.plot_compass_pp}.
 #' @param p_list_scores
 #' list of \code{ggplot2} objects.
 #' PFS and FS response plots, as
-#' returned by \code{compassutils:::.plot_compass_scores}.
+#' returned by \code{UtilsCompassSV:::.plot_compass_scores}.
 #' @param height,width numeric. Height and width of saved plot(s).
 #' @inheritParams plot_compass
 #' @export

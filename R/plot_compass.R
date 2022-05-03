@@ -99,8 +99,8 @@
 #' @export
 #'
 #' @examples
-#' library(compassutils)
-#' data("c_obj_list", package = "compassutils")
+#' library(UtilsCompassSV)
+#' data("c_obj_list", package = "UtilsCompassSV")
 #' plot_compass(
 #' c_obj = c_obj_list,
 #' type = c("pp", "scores"),
