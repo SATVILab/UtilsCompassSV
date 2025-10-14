@@ -11,7 +11,8 @@
 #' boxplot of PFS and FS scores.
 .plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
                                  plot_scores_lims_y,
-                                 font_size) {
+                                 font_size,
+                                 line_width = 0.5) {
 
   # prep
   score_tbl <- purrr::map_df(seq_along(c_obj), function(i) {
@@ -47,9 +48,9 @@
     ) +
       geom_boxplot(
         outlier.size = 0.25, outlier.colour = "gray50",
-        width = boxplot_width
+        width = boxplot_width, linewidth = line_width
       ) +
-      cowplot::theme_cowplot(font_size = font_size) +
+      cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
@@ -71,7 +72,7 @@
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab, boxplot_width, font_size) {
+                             cyt_lab, boxplot_width, font_size, line_width) {
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i) {
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -208,7 +209,7 @@
       fill = expr_degree
     )
   ) +
-    cowplot::theme_cowplot(font_size = font_size) +
+    cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
     # geom_raster(col = 'black', linetype = 'solid') +
     geom_tile(col = "black") +
     scale_fill_manual(values = expr_degree_lab_vec) +
@@ -239,11 +240,11 @@
         dplyr::filter(.grp == grp_curr),
       aes(x = combn, y = prob, fill = .grp)
     ) +
-      cowplot::theme_cowplot(font_size = font_size) +
+      cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
       cowplot::background_grid(major = "y") +
       geom_boxplot(
         outlier.size = 0.25, outlier.colour = "gray50",
-        width = boxplot_width
+        width = boxplot_width, linewidth = line_width
       ) +
       scale_fill_manual(values = col_vec_grp) +
       lims(y = c(0, 1)) +

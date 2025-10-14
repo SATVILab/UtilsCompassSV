@@ -157,6 +157,7 @@ plot_compass <- function(c_obj,
                          width_grid = NULL,
                          save_ind = FALSE,
                          font_size = 14,
+                         line_width = 0.5,
                          height_ind = NULL,
                          width_ind = NULL,
                          plot_scores_lims_y = NULL,
@@ -208,7 +209,7 @@ plot_compass <- function(c_obj,
       quant_min = quant_min, silent = silent, cyt_order = cyt_order,
       boxplot_width = boxplot_width_pp,
       plot_prob_fill = plot_prob_fill, facet = facet,
-      cyt_lab = cyt_lab, font_size = font_size
+      cyt_lab = cyt_lab, font_size = font_size, line_width = line_width
     )
   }
 
@@ -219,7 +220,8 @@ plot_compass <- function(c_obj,
       boxplot_width = boxplot_width_scores,
       plot_prob_fill = plot_prob_fill,
       plot_scores_lims_y = plot_scores_lims_y,
-      font_size = font_size
+      font_size = font_size,
+      line_width = line_width
     )
   } else {
     p_list_scores <- NULL
