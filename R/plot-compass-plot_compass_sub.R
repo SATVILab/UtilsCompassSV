@@ -72,7 +72,7 @@
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab, boxplot_width, font_size, line_width) {
+                             cyt_lab, boxplot_width, font_size, line_width, tile_colour) {
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i) {
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma

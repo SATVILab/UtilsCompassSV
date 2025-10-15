@@ -161,7 +161,8 @@ plot_compass <- function(c_obj,
                          height_ind = NULL,
                          width_ind = NULL,
                          plot_scores_lims_y = NULL,
-                         font_size_labels = 14) {
+                         font_size_labels = 14,
+                         tile_colour = NULL) {
 
   # prep
   # -------------------
@@ -209,7 +210,8 @@ plot_compass <- function(c_obj,
       quant_min = quant_min, silent = silent, cyt_order = cyt_order,
       boxplot_width = boxplot_width_pp,
       plot_prob_fill = plot_prob_fill, facet = facet,
-      cyt_lab = cyt_lab, font_size = font_size, line_width = line_width
+      cyt_lab = cyt_lab, font_size = font_size, line_width = line_width,
+      tile_colour = tile_colour
     )
   }
 
