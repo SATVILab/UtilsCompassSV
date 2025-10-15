@@ -211,7 +211,6 @@
   ) +
     cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
     # geom_raster(col = 'black', linetype = 'solid') +
-    geom_tile(col = "black") +
     scale_fill_manual(values = expr_degree_lab_vec) +
     theme(legend.position = "none") +
     theme(
@@ -220,6 +219,11 @@
       axis.title.x = element_blank(),
       axis.title.y = element_blank()
     )
+  if (!is.null(tile_colour)) {
+    p <- p + geom_tile(color = tile_colour)
+  } else {
+    p <- p + geom_tile()
+  }
 
   if (!is.null(cyt_lab)) {
     p_grid_orig <- p_grid
