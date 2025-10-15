@@ -220,9 +220,9 @@
       axis.title.y = element_blank()
     )
   if (!is.null(tile_colour)) {
-    p <- p + geom_tile(color = tile_colour)
+    p_grid <- p_grid + geom_tile(color = tile_colour)
   } else {
-    p <- p + geom_tile()
+    p_grid <- p_grid + geom_tile()
   }
 
   if (!is.null(cyt_lab)) {
