@@ -72,7 +72,8 @@
 #' labels, respectively.
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
-                             cyt_lab, boxplot_width, font_size, line_width, tile_colour) {
+                             cyt_lab, boxplot_width, font_size, line_width,
+                             tile_colour, tile_alpha) {
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i) {
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -220,9 +221,9 @@
       axis.title.y = element_blank()
     )
   if (!is.null(tile_colour)) {
-    p_grid <- p_grid + geom_tile(color = tile_colour)
+    p_grid <- p_grid + geom_tile(color = tile_colour, alpha = tile_alpha)
   } else {
-    p_grid <- p_grid + geom_tile()
+    p_grid <- p_grid + geom_tile(alpha = tile_alpha)
   }
 
   if (!is.null(cyt_lab)) {

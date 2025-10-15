@@ -94,6 +94,10 @@
 #' @param plot_scores_lims_y numeric vector of length 2.
 #' If not \code{NULL}, specifies the y-axis range for the scores plots.
 #' Default is \code{NULL}.
+#' @param tile_colour character. Colour to use for the tiles in the cytokine grid plot.
+#' If \code{NULL}, then no colour is used. Default is \code{NULL}.
+#' @param tile_alpha numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
+#' Default is \code{0} (no transparency).
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
@@ -162,7 +166,8 @@ plot_compass <- function(c_obj,
                          width_ind = NULL,
                          plot_scores_lims_y = NULL,
                          font_size_labels = 14,
-                         tile_colour = NULL) {
+                         tile_colour = NULL,
+                         tile_alpha = 0) {
 
   # prep
   # -------------------
@@ -211,7 +216,7 @@ plot_compass <- function(c_obj,
       boxplot_width = boxplot_width_pp,
       plot_prob_fill = plot_prob_fill, facet = facet,
       cyt_lab = cyt_lab, font_size = font_size, line_width = line_width,
-      tile_colour = tile_colour
+      tile_colour = tile_colour, tile_alpha = tile_alpha
     )
   }
 
