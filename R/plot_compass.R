@@ -97,7 +97,7 @@
 #' @param tile_colour character. Colour to use for the tiles in the cytokine grid plot.
 #' If \code{NULL}, then no colour is used. Default is \code{NULL}.
 #' @param tile_alpha numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
-#' Default is \code{0} (no transparency).
+#' Default is \code{1} (no transparency, i.e. fully opaque).
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export
@@ -167,7 +167,7 @@ plot_compass <- function(c_obj,
                          plot_scores_lims_y = NULL,
                          font_size_labels = 14,
                          tile_colour = NULL,
-                         tile_alpha = 0) {
+                         tile_alpha = 1) {
 
   # prep
   # -------------------

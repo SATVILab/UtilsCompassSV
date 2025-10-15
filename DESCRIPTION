@@ -1,7 +1,7 @@
 Package: UtilsCompassSV
 Type: Package
 Title: Utility functions to plot and work with COMPASS output
-Version: 0.1.5
+Version: 0.1.6
 Author: Miguel Julio Rodo
 Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
 Description: Primary function thus far is plot_compass, 
