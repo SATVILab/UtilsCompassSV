@@ -1,0 +1,288 @@
+* using log directory ‘/home/runner/work/UtilsCompassSV/UtilsCompassSV/UtilsCompassSV.Rcheck’
+* using R version 4.5.2 (2025-10-31)
+* using platform: x86_64-pc-linux-gnu
+* R was compiled by
+    gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+    GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+* running under: Ubuntu 24.04.3 LTS
+* using session charset: UTF-8
+* using option ‘--as-cran’
+* checking for file ‘UtilsCompassSV/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘UtilsCompassSV’ version ‘0.1.6’
+* package encoding: UTF-8
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Miguel Julio Rodo <rdxmig002@myuct.ac.za>’
+
+New submission
+
+No Authors@R field in DESCRIPTION.
+Please add one, modifying
+  Authors@R: person(given = c("Miguel", "Julio"),
+                    family = "Rodo",
+                    role = c("aut", "cre"),
+                    email = "rdxmig002@myuct.ac.za")
+as necessary.
+
+The Title field should be in title case. Current version is:
+  ‘Utility functions to plot and work with COMPASS output’
+In title case that is:
+  ‘Utility Functions to Plot and Work with COMPASS Output’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
+* checking whether package ‘UtilsCompassSV’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for future file timestamps ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘README.html’
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking code files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... WARNING
+'::' or ':::' import not declared from: ‘dplyr’
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+.plot_compass_scores : <anonymous>: warning in coord_cartesian(y =
+  y_lim_vec): partial argument match of 'y' to 'ylim'
+.get_col_vec_grp: no visible global function definition for ‘setNames’
+.get_col_vec_grp_null: no visible global function definition for
+  ‘setNames’
+.plot_compass_pp : <anonymous>: no visible binding for global variable
+  ‘.id’
+.plot_compass_pp: no visible binding for global variable ‘combn’
+.plot_compass_pp: no visible binding for global variable ‘.grp’
+.plot_compass_pp: no visible global function definition for ‘quantile’
+.plot_compass_pp: no visible binding for global variable ‘prob’
+.plot_compass_pp: no visible binding for global variable ‘return_plot’
+.plot_compass_pp: no visible binding for global variable ‘init_list’
+.plot_compass_pp: no visible global function definition for ‘setNames’
+.plot_compass_pp: no visible binding for global variable
+  ‘init_name_vec’
+.plot_compass_pp: no visible binding for global variable ‘degree’
+.plot_compass_pp: no visible binding for global variable ‘quant’
+.plot_compass_pp: no visible binding for global variable ‘expressed’
+.plot_compass_pp: no visible binding for global variable ‘expr_degree’
+.plot_compass_pp : <anonymous>: no visible binding for global variable
+  ‘.grp’
+.plot_compass_pp : <anonymous>: no visible binding for global variable
+  ‘combn’
+.plot_compass_pp : <anonymous>: no visible binding for global variable
+  ‘prob’
+.plot_compass_scores : <anonymous>: no visible binding for global
+  variable ‘.id’
+.plot_compass_scores: no visible binding for global variable ‘.id’
+.plot_compass_scores: no visible binding for global variable ‘.grp’
+.plot_compass_scores : <anonymous>: no visible binding for global
+  variable ‘.grp’
+.plot_compass_scores : <anonymous>: no visible binding for global
+  variable ‘score_type’
+.plot_compass_scores : <anonymous>: no visible binding for global
+  variable ‘score’
+.plot_compass_scores: no visible global function definition for
+  ‘setNames’
+response_prob: no visible binding for global variable ‘sampleid’
+response_prob: no visible global function definition for ‘everything’
+response_prob: no visible binding for global variable ‘cyt_combn’
+response_prob: no visible binding for global variable ‘prob’
+Undefined global functions or variables:
+  .grp .id combn cyt_combn degree everything expr_degree expressed
+  init_list init_name_vec prob quant quantile return_plot sampleid
+  score score_type setNames
+Consider adding
+  importFrom("stats", "quantile", "setNames")
+  importFrom("utils", "combn")
+to your NAMESPACE file.
+
+Found if() conditions comparing class() to string:
+File ‘UtilsCompassSV/R/get_col_vec_grp.R’: if (class(col_vec_grp) != "try-error") ...
+File ‘UtilsCompassSV/R/get_col_vec_grp.R’: if (!class(col_vec_grp) == "try-error") ...
+File ‘UtilsCompassSV/R/get_col_vec_grp.R’: if (class(col_vec_grp) != "try-error") ...
+Use inherits() (or maybe is()) instead.
+* checking Rd files ... NOTE
+checkRd: (-1) dot-plot_compass_pp.Rd:28: Lost braces; missing escapes or markup?
+    28 | if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+       |                                            ^
+checkRd: (-1) dot-plot_compass_pp.Rd:34: Lost braces; missing escapes or markup?
+    34 | if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+       |                                            ^
+checkRd: (-1) plot_compass.Rd:57: Lost braces; missing escapes or markup?
+    57 | if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+       |                                            ^
+checkRd: (-1) plot_compass.Rd:75: Lost braces
+    75 | If \\code{is.null(file)}, then the grid plot is
+       |          ^
+checkRd: (-1) plot_compass.Rd:77: Lost braces
+    77 | If \\code{is.null(file_ind)}, then each element
+       |          ^
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... WARNING
+Undocumented code objects:
+  ‘c_obj’ ‘c_obj_list’
+Undocumented data sets:
+  ‘c_obj’ ‘c_obj_list’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+* checking for code/documentation mismatches ... WARNING
+Codoc mismatches from Rd file 'dot-plot_compass_pp.Rd':
+.plot_compass_pp
+  Code: function(c_obj, dir_save, prob_min, quant_min, silent,
+                 cyt_order, plot_prob_fill, facet, cyt_lab,
+                 boxplot_width, font_size, line_width, tile_colour,
+                 tile_alpha)
+  Docs: function(c_obj, dir_save, prob_min, quant_min, silent,
+                 cyt_order, plot_prob_fill, facet, cyt_lab,
+                 boxplot_width, font_size)
+  Argument names in code not in docs:
+    line_width tile_colour tile_alpha
+
+Codoc mismatches from Rd file 'dot-plot_compass_scores.Rd':
+.plot_compass_scores
+  Code: function(c_obj, plot_prob_fill, boxplot_width,
+                 plot_scores_lims_y, font_size, line_width = 0.5)
+  Docs: function(c_obj, plot_prob_fill, boxplot_width,
+                 plot_scores_lims_y, font_size)
+  Argument names in code not in docs:
+    line_width
+
+Codoc mismatches from Rd file 'plot_compass.Rd':
+plot_compass
+  Code: function(c_obj, dir_save = getwd(), type = c("pp", "scores"),
+                 save = TRUE, save_format = "png", prob_min = 0.8,
+                 quant_min = 0.25, boxplot_width_scores = NULL,
+                 boxplot_width_pp = NULL, silent = FALSE, cyt_order =
+                 NULL, file_grid = NULL, file_ind = NULL,
+                 plot_prob_fill = NULL, shift_plot_heatmap_x = 0,
+                 shift_plot_scores_y = c(0, 0), shift_plot_pp_y = 0,
+                 shift_label = c(0.05, -0.04), prop_pp = c(0.7, 0.7),
+                 label = TRUE, return_plot_list = TRUE, facet = FALSE,
+                 n_col = NULL, cyt_lab = NULL, save_grid = TRUE,
+                 height_grid = NULL, width_grid = NULL, save_ind =
+                 FALSE, font_size = 14, line_width = 0.5, height_ind =
+                 NULL, width_ind = NULL, plot_scores_lims_y = NULL,
+                 font_size_labels = 14, tile_colour = NULL, tile_alpha
+                 = 1)
+  Docs: function(c_obj, dir_save = getwd(), type = c("pp", "scores"),
+                 save = TRUE, save_format = "png", prob_min = 0.8,
+                 quant_min = 0.25, boxplot_width_scores = NULL,
+                 boxplot_width_pp = NULL, silent = FALSE, cyt_order =
+                 NULL, file_grid = NULL, file_ind = NULL,
+                 plot_prob_fill = NULL, shift_plot_heatmap_x = 0,
+                 shift_plot_scores_y = c(0, 0), shift_plot_pp_y = 0,
+                 shift_label = c(0.05, -0.04), prop_pp = c(0.7, 0.7),
+                 label = TRUE, return_plot_list = TRUE, facet = FALSE,
+                 n_col = NULL, cyt_lab = NULL, save_grid = TRUE,
+                 height_grid = NULL, width_grid = NULL, save_ind =
+                 FALSE, font_size = 14, height_ind = NULL, width_ind =
+                 NULL, plot_scores_lims_y = NULL, font_size_labels =
+                 14)
+  Argument names in code not in docs:
+    line_width tile_colour tile_alpha
+  Mismatches in argument names (first 3):
+    Position: 30 Code: line_width Docs: height_ind
+    Position: 31 Code: height_ind Docs: width_ind
+    Position: 32 Code: width_ind Docs: plot_scores_lims_y
+
+* checking Rd \usage sections ... WARNING
+Undocumented arguments in Rd file 'dot-get_col_vec_grp_null.Rd'
+  ‘.grp’
+
+Undocumented arguments in Rd file 'dot-plot_compass_pp.Rd'
+  ‘boxplot_width’ ‘font_size’
+
+Undocumented arguments in Rd file 'dot-plot_compass_scores.Rd'
+  ‘boxplot_width’ ‘font_size’
+
+Undocumented arguments in Rd file 'dot-save_layout.Rd'
+  ‘file’ ‘n_col’ ‘font_size_labels’
+
+Undocumented arguments in Rd file 'plot_compass.Rd'
+  ‘c_obj’ ‘n_col’ ‘font_size’ ‘font_size_labels’
+
+Undocumented arguments in Rd file 'save_plot.Rd'
+  ‘height’ ‘width’ ‘file’
+
+Functions with \usage entries need to have the appropriate \alias
+entries, and all their arguments documented.
+The \usage entries must correspond to syntactically valid R code.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking examples ... ERROR
+Running examples in ‘UtilsCompassSV-Ex.R’ failed
+The error most likely occurred in:
+
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: .get_col_vec_grp
+> ### Title: Get colours for groups for boxplots
+> ### Aliases: .get_col_vec_grp
+> 
+> ### ** Examples
+> 
+> .get_col_vec_grp(plot_prob_fill = "red", .grp = c("grp1", "grp2"))
+Error in .get_col_vec_grp(plot_prob_fill = "red", .grp = c("grp1", "grp2")) : 
+  could not find function ".get_col_vec_grp"
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+    3. │   ├─... %>% setNames(combn_sel_vec)
+    4. │   └─purrr::map_chr(...)
+    5. │     └─purrr:::map_("character", .x, .f, ..., .progress = .progress)
+    6. │       ├─purrr:::with_indexed_errors(...)
+    7. │       │ └─base::withCallingHandlers(...)
+    8. │       └─purrr:::call_with_cleanup(...)
+    9. ├─stats::setNames(., combn_sel_vec)
+   10. └─base::.handleSimpleError(...)
+   11.   └─purrr (local) h(simpleError(msg, call))
+   12.     └─cli::cli_abort(...)
+   13.       └─rlang::abort(...)
+  
+  [ FAIL 1 | WARN 0 | SKIP 0 | PASS 16 ]
+  Error: Test failures
+  Execution halted
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+* checking PDF version of manual without index ... ERROR
+Re-running with no redirection of stdout/stderr.
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found.
+Please obtain a recent version of HTML Tidy by downloading a binary
+release or compiling the source code from <https://www.html-tidy.org/>.
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  ‘UtilsCompassSV-manual.tex’
+* checking for detritus in the temp directory ... OK
+* DONE
+Status: 3 ERRORs, 5 WARNINGs, 6 NOTEs

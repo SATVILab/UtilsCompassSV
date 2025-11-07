@@ -1,0 +1,14 @@
+.get_col_vec_grp        Get colours for groups for boxplots
+.get_col_vec_grp_null   Get colour vector for groups if plot_prob_fill
+                        is NULL
+.plot_compass_pp        Plot COMPASS posterior probabilites
+.plot_compass_scores    Plot COMPASS PFS and FS scores
+.save_layout            Create a layout based on post probs, cyt heat
+                        map and scores
+.save_plot              Save an individual layout
+convert_cyt_combn_format
+                        Convert cytokine combination format to or from
+                        COMPASS format
+plot_compass            Plot COMPASS output
+response_prob           Calculate COMPASS-derived overall responder
+                        probability

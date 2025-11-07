@@ -1,0 +1,10 @@
+%>%	pipe
+.get_col_vec_grp	dot-get_col_vec_grp
+.get_col_vec_grp_null	dot-get_col_vec_grp_null
+.plot_compass_pp	dot-plot_compass_pp
+.plot_compass_scores	dot-plot_compass_scores
+.save_layout	dot-save_layout
+.save_plot	save_plot
+convert_cyt_combn_format	convert_cyt_combn_format
+plot_compass	plot_compass
+response_prob	response_prob
