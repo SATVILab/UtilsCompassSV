@@ -112,6 +112,6 @@ devtools::document()
 
 ## Version Management
 
-- Version is stored in DESCRIPTION file (current: 0.1.6)
+- Version is stored in DESCRIPTION file
 - Follow semantic versioning when incrementing versions
 - Update NEWS.md (if exists) when making user-facing changes
