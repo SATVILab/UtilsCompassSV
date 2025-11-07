@@ -87,6 +87,8 @@ devtools::document()
 
 3. **Cytokine Combinations**:
    - Support both "standard" (+/-) and COMPASS (!&) formats
+     - Standard format: `IFNg+IL2-TNF+` (+ for positive, - for negative)
+     - COMPASS format: `IFNg&!IL2&TNF` (& as separator, ! for negation)
    - Maintain consistent cytokine ordering across visualizations
 
 4. **Data Handling**:
