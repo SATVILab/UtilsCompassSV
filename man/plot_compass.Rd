@@ -34,10 +34,13 @@ plot_compass(
   width_grid = NULL,
   save_ind = FALSE,
   font_size = 14,
+  line_width = 0.5,
   height_ind = NULL,
   width_ind = NULL,
   plot_scores_lims_y = NULL,
-  font_size_labels = 14
+  font_size_labels = 14,
+  tile_colour = NULL,
+  tile_alpha = 1
 )
 }
 \arguments{
@@ -54,7 +57,7 @@ If "scores" is included, then the PFS and FS responses are included. Note that, 
 
 \item{prob_min, quant_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
 of samples that a cytokine combination must have to be included. For example,
-if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+if \code{prob_min == 0.5} and \code{quant_min == 0.1}, then only cytokine combinations for which
 at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
 Default is \code{0.8} and \code{0.25}.}
 
@@ -72,9 +75,9 @@ If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Def
 
 \item{file_grid, file_ind}{character (vector).
 Names for grid plot and individual plots, respectively, to be saved as.
-If \\code{is.null(file)}, then the grid plot is
+If \code{is.null(file_grid)}, then the grid plot is
 simply named \code{compass_boxplots_grid}.
-If \\code{is.null(file_ind)}, then each element
+If \code{is.null(file_ind)}, then each element
 has its name taken from the corresponding list name in \code{c_obj}.
 If \code{file_ind} is named, then the names of \code{c_obj}
 are used to map onto elements of \code{file_ind}.}
@@ -152,6 +155,12 @@ when saving individual elements in \code{c_obj}. If
 \item{plot_scores_lims_y}{numeric vector of length 2.
 If not \code{NULL}, specifies the y-axis range for the scores plots.
 Default is \code{NULL}.}
+
+\item{tile_colour}{character. Colour to use for the tiles in the cytokine grid plot.
+If \code{NULL}, then no colour is used. Default is \code{NULL}.}
+
+\item{tile_alpha}{numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
+Default is \code{1} (no transparency, i.e. fully opaque).}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.

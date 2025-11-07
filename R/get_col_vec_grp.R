@@ -6,10 +6,7 @@
 #' @return A named character vector, where names are names of groups
 #' and elements are colours for the groups
 #'
-#' @examples
-#' .get_col_vec_grp(plot_prob_fill = "red", .grp = c("grp1", "grp2"))
-#' .get_col_vec_grp(plot_prob_fill = NULL, .grp = c("grp1", "grp2"))
-#' .get_col_vec_grp(plot_prob_fill = c("grp1" = "red", "grp2" = "orange"))
+#' @keywords internal
 .get_col_vec_grp <- function(plot_prob_fill = NULL, .grp = NULL) {
   if (!is.null(names(plot_prob_fill))) {
     if (!is.character(plot_prob_fill)) {
@@ -38,7 +35,7 @@
     plot_prob_fill,
     .grp
   ))
-  if (class(col_vec_grp) != "try-error") {
+  if (!inherits(col_vec_grp, "try-error")) {
     return(col_vec_grp)
   }
 
@@ -47,6 +44,7 @@
 }
 
 #' @title Get colour vector for groups if plot_prob_fill is NULL
+#' @keywords internal
 .get_col_vec_grp_null <- function(.grp) {
   col_vec_grp <- try(setNames(
     RColorBrewer::brewer.pal(
@@ -55,7 +53,7 @@
     )[-c(1, length(.grp) + 2)],
     .grp
   ))
-  if (!class(col_vec_grp) == "try-error") {
+  if (!inherits(col_vec_grp, "try-error")) {
     return(col_vec_grp)
   }
 
@@ -66,7 +64,7 @@
     ),
     .grp
   ))
-  if (class(col_vec_grp) != "try-error") {
+  if (!inherits(col_vec_grp, "try-error")) {
     return(col_vec_grp)
   }
 

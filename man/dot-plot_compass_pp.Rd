@@ -15,7 +15,10 @@
   facet,
   cyt_lab,
   boxplot_width,
-  font_size
+  font_size,
+  line_width,
+  tile_colour,
+  tile_alpha
 )
 }
 \arguments{
@@ -23,15 +26,9 @@
 
 \item{dir_save}{character. Where to save the output. Default is working directory.}
 
-\item{prob_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
+\item{prob_min, quant_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
 of samples that a cytokine combination must have to be included. For example,
-if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
-at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
-Default is \code{0.8} and \code{0.25}.}
-
-\item{quant_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
-of samples that a cytokine combination must have to be included. For example,
-if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+if \code{prob_min == 0.5} and \code{quant_min == 0.1}, then only cytokine combinations for which
 at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
 Default is \code{0.8} and \code{0.25}.}
 
@@ -59,6 +56,12 @@ via the \code{labels} parameter. For example, if we have two cytokines, \code{"I
 \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
 set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
 This will change the label for \code{"IFNg"} but leave all the others as is.}
+
+\item{tile_colour}{character. Colour to use for the tiles in the cytokine grid plot.
+If \code{NULL}, then no colour is used. Default is \code{NULL}.}
+
+\item{tile_alpha}{numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
+Default is \code{1} (no transparency, i.e. fully opaque).}
 }
 \value{
 A named list with names 'p_probs' and 'p_grid',

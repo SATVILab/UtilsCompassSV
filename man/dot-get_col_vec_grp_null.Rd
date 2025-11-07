@@ -9,3 +9,4 @@
 \description{
 Get colour vector for groups if plot_prob_fill is NULL
 }
+\keyword{internal}

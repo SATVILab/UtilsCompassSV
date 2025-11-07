@@ -54,7 +54,7 @@
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
-      coord_cartesian(y = y_lim_vec) +
+      coord_cartesian(ylim = y_lim_vec) +
       theme(legend.position = "none")
   }) %>%
     setNames(names(c_obj))
@@ -124,7 +124,7 @@
   # ------------------------
 
   degree_lab_vec <- purrr::map_chr(combn_sel_vec, function(combn) {
-    nrow(stringr::str_locate_all(combn, "[[+]]")[[1]])
+    as.character(nrow(stringr::str_locate_all(combn, "[[+]]")[[1]]))
   }) %>%
     setNames(combn_sel_vec)
 

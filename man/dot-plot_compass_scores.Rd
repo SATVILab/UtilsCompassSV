@@ -9,7 +9,8 @@
   plot_prob_fill,
   boxplot_width,
   plot_scores_lims_y,
-  font_size
+  font_size,
+  line_width = 0.5
 )
 }
 \arguments{
