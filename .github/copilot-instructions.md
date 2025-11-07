@@ -25,8 +25,8 @@ Dependencies are managed through the DESCRIPTION file. The `.github/workflows/co
 ### Building and Testing
 ```r
 # Install dependencies (if needed manually)
-install.packages("remotes")
-remotes::install_deps(dependencies = TRUE)
+install.packages("devtools")
+devtools::install_deps(dependencies = TRUE)
 
 # Load the package for development
 devtools::load_all()
