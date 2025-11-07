@@ -20,7 +20,7 @@ This is an R package that provides utility functions for plotting and working wi
 ## Development Workflow
 
 ### Setup
-Dependencies are managed through the DESCRIPTION file and installed automatically via `copilot-setup-steps.yml` during CI/CD.
+Dependencies are managed through the DESCRIPTION file. The `.github/workflows/copilot-setup-steps.yml` workflow pre-installs dependencies in Copilot's ephemeral environment.
 
 ### Building and Testing
 ```r
