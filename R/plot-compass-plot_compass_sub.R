@@ -5,10 +5,14 @@
 #'
 #' @inheritParams plot_compass
 #' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
+#' @param boxplot_width numeric. Width parameter for geom_boxplot.
+#' @param font_size numeric. Base font size for plots.
+#' @param line_width numeric. Width of lines in plots.
 #'
 #' @return A named list with names set to the names
 #' of \code{c_obj}, where each element is the corresponding
 #' boxplot of PFS and FS scores.
+#' @keywords internal
 .plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
                                  plot_scores_lims_y,
                                  font_size,
@@ -65,11 +69,15 @@
 #'
 #' @inheritParams plot_compass
 #' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
+#' @param boxplot_width numeric. Width parameter for geom_boxplot.
+#' @param font_size numeric. Base font size for plots.
+#' @param line_width numeric. Width of lines in plots.
 #'
 #' @return A named list with names 'p_probs' and 'p_grid',
 #' corresponding to the list of ggplot2 plots of posterior plots
 #' and the heat map of the corresponding cytokine combination
 #' labels, respectively.
+#' @keywords internal
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
                              cyt_lab, boxplot_width, font_size, line_width,

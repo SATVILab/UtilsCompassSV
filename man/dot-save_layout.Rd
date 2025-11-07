@@ -65,6 +65,8 @@ Default is 0.}
 
 \item{dir_save}{character. Where to save the output. Default is working directory.}
 
+\item{file}{character. File name for the saved plot.}
+
 \item{save_format}{"pdf" or "png". Plot device to use. Default is "png".}
 
 \item{label}{logical. If \code{TRUE} and \code{c_obj} is a list, then the names of
@@ -72,8 +74,12 @@ elements in \code{c_obj} are used as labels for sub-figures.
 If \code{c_obj} is not a list, then no label is printed, regardless of the
 value of \code{label}. Default is \code{TRUE}.}
 
+\item{n_col}{integer. Number of columns for the grid layout.}
+
 \item{shift_label}{numeric vector, values in \code{[0,1]}. Specifies amount by which to shift
 the labels of the plot (if used). Default is \code{c(0.05, -0.04)}.}
+
+\item{font_size_labels}{numeric. Font size for plot labels.}
 }
 \description{
 Create a layout based on post probs, cyt heat map and scores

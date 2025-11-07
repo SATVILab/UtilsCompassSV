@@ -4,7 +4,7 @@
 #' A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
 #' y-axis scales and cytokine combinations displayed fixed across plots.
 #'
-#'' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
+#' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
 #' COMPASS data to plot.
 #' @param dir_save character. Where to save the output. Default is working directory.
 #' @param save logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.
@@ -98,6 +98,11 @@
 #' If \code{NULL}, then no colour is used. Default is \code{NULL}.
 #' @param tile_alpha numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
 #' Default is \code{1} (no transparency, i.e. fully opaque).
+#' @param n_col integer. Number of columns for the grid plot when \code{facet = TRUE}.
+#' If \code{NULL}, the number of columns is automatically determined. Default is \code{NULL}.
+#' @param font_size numeric. Base font size for plots. Default is \code{14}.
+#' @param line_width numeric. Width of lines in plots. Default is \code{0.5}.
+#' @param font_size_labels numeric. Font size for plot labels. Default is \code{14}.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export

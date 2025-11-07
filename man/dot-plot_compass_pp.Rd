@@ -57,6 +57,12 @@ via the \code{labels} parameter. For example, if we have two cytokines, \code{"I
 set \code{cyt_lab} equal to the following: \code{cyt_lab = function(cyt) purrr::map(cyt, function(cyt_ind){switch(cyt_ind, "IFNg" = bquote(paste(plain(paste("IFN")), gamma)), cyt_ind)})}.
 This will change the label for \code{"IFNg"} but leave all the others as is.}
 
+\item{boxplot_width}{numeric. Width parameter for geom_boxplot.}
+
+\item{font_size}{numeric. Base font size for plots.}
+
+\item{line_width}{numeric. Width of lines in plots.}
+
 \item{tile_colour}{character. Colour to use for the tiles in the cytokine grid plot.
 If \code{NULL}, then no colour is used. Default is \code{NULL}.}
 
@@ -72,3 +78,4 @@ labels, respectively.
 \description{
 Plot COMPASS posterior probabilites
 }
+\keyword{internal}
