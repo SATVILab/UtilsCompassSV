@@ -23,6 +23,6 @@
 Determines \code{width} and \code{height} if they are \code{NULL}.}
 }
 \description{
-Save an indivdual plot layout.
+Save an individual plot layout.
 }
 \keyword{internal}

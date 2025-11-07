@@ -173,7 +173,7 @@
 #' @title Save an individual layout
 #' @rdname save_plot
 #'
-#' @description Save an indivdual plot layout.
+#' @description Save an individual plot layout.
 #'
 #' @inheritParams plot_compass
 #' @param p object of class \code{gg}. Plot to save.
