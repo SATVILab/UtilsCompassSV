@@ -12,6 +12,9 @@
 #' PFS and FS response plots, as
 #' returned by \code{UtilsCompassSV:::.plot_compass_scores}.
 #' @param height,width numeric. Height and width of saved plot(s).
+#' @param file character. File name for the saved plot.
+#' @param n_col integer. Number of columns for the grid layout.
+#' @param font_size_labels numeric. Font size for plot labels.
 #' @inheritParams plot_compass
 #' @export
 .save_layout <- function(ind, p_list_pp, p_list_scores = NULL,
@@ -170,13 +173,16 @@
 #' @title Save an individual layout
 #' @rdname save_plot
 #'
-#' @description Save an indivdual plot layout.
+#' @description Save an individual plot layout.
 #'
 #' @inheritParams plot_compass
 #' @param p object of class \code{gg}. Plot to save.
 #' @param n_row,n_col integer. Number of objects plotted per row and column.
 #' Determines \code{width} and \code{height} if they are \code{NULL}.
-#'
+#' @param height numeric. Height of saved plot in centimeters.
+#' @param width numeric. Width of saved plot in centimeters.
+#' @param file character. File name for the saved plot.
+#' @keywords internal
 .save_plot <- function(p,
                        height,
                        width,

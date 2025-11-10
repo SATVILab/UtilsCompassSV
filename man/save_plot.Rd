@@ -9,7 +9,13 @@
 \arguments{
 \item{p}{object of class \code{gg}. Plot to save.}
 
+\item{height}{numeric. Height of saved plot in centimeters.}
+
+\item{width}{numeric. Width of saved plot in centimeters.}
+
 \item{dir_save}{character. Where to save the output. Default is working directory.}
+
+\item{file}{character. File name for the saved plot.}
 
 \item{save_format}{"pdf" or "png". Plot device to use. Default is "png".}
 
@@ -17,5 +23,6 @@
 Determines \code{width} and \code{height} if they are \code{NULL}.}
 }
 \description{
-Save an indivdual plot layout.
+Save an individual plot layout.
 }
+\keyword{internal}

@@ -4,13 +4,13 @@
 #' A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
 #' y-axis scales and cytokine combinations displayed fixed across plots.
 #'
-#'' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
+#' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
 #' COMPASS data to plot.
 #' @param dir_save character. Where to save the output. Default is working directory.
 #' @param save logical. If \code{TRUE}, then plots are saved. Default is \code{TRUE}.
 #' @param prob_min,quant_min [0,1]. Specify the minimum probability of a response for the minimum quantile
 #' of samples that a cytokine combination must have to be included. For example,
-#' if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+#' if \code{prob_min == 0.5} and \code{quant_min == 0.1}, then only cytokine combinations for which
 #' at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
 #' Default is \code{0.8} and \code{0.25}.
 #' @param cyt_order character. If not \code{NULL}, then the order in which cytokines are arranged
@@ -85,9 +85,9 @@
 #' \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.
 #' @param file_grid,file_ind character (vector).
 #' Names for grid plot and individual plots, respectively, to be saved as.
-#' If \\code{is.null(file)}, then the grid plot is
+#' If \code{is.null(file_grid)}, then the grid plot is
 #' simply named \code{compass_boxplots_grid}.
-#' If \\code{is.null(file_ind)}, then each element
+#' If \code{is.null(file_ind)}, then each element
 #' has its name taken from the corresponding list name in \code{c_obj}.
 #' If \code{file_ind} is named, then the names of \code{c_obj}
 #' are used to map onto elements of \code{file_ind}.
@@ -98,6 +98,11 @@
 #' If \code{NULL}, then no colour is used. Default is \code{NULL}.
 #' @param tile_alpha numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
 #' Default is \code{1} (no transparency, i.e. fully opaque).
+#' @param n_col integer. Number of columns for the grid plot when \code{facet = TRUE}.
+#' If \code{NULL}, the number of columns is automatically determined. Default is \code{NULL}.
+#' @param font_size numeric. Base font size for plots. Default is \code{14}.
+#' @param line_width numeric. Width of lines in plots. Default is \code{0.5}.
+#' @param font_size_labels numeric. Font size for plot labels. Default is \code{14}.
 #' @return A list, where each element is a \code{ggplot2} object.
 #'
 #' @export

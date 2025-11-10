@@ -1,9 +1,11 @@
 Package: UtilsCompassSV
 Type: Package
-Title: Utility functions to plot and work with COMPASS output
+Title: Utility Functions to Plot and Work with COMPASS Output
 Version: 0.1.6
-Author: Miguel Julio Rodo
-Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
+Authors@R: person(given = c("Miguel", "Julio"),
+                  family = "Rodo",
+                  role = c("aut", "cre"),
+                  email = "rdxmig002@myuct.ac.za")
 Description: Primary function thus far is plot_compass, 
     which plots posterior probabilities for each cytokine combination
 	using more concise alternatives to the COMPASS::plot function's grid. 
@@ -27,5 +29,6 @@ Imports:
     cowplot,
     COMPASS,
     RColorBrewer,
-    ggplot2
-RoxygenNote: 7.1.2
+    ggplot2,
+    dplyr
+RoxygenNote: 7.3.3

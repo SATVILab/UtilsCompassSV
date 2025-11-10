@@ -9,7 +9,8 @@
   plot_prob_fill,
   boxplot_width,
   plot_scores_lims_y,
-  font_size
+  font_size,
+  line_width = 0.5
 )
 }
 \arguments{
@@ -20,9 +21,15 @@ to the specified value. If a named vector of colours names correspond to names
 of the bottom-most level of the \code{c_obj} lists, then boxplots are filled
 accordingly.  Otherwise, boxplots are filled according to names of lower-most list but using}
 
+\item{boxplot_width}{numeric. Width parameter for geom_boxplot.}
+
 \item{plot_scores_lims_y}{numeric vector of length 2.
 If not \code{NULL}, specifies the y-axis range for the scores plots.
 Default is \code{NULL}.}
+
+\item{font_size}{numeric. Base font size for plots.}
+
+\item{line_width}{numeric. Width of lines in plots.}
 }
 \value{
 A named list with names set to the names
@@ -32,3 +39,4 @@ boxplot of PFS and FS scores.
 \description{
 Plot COMPASS PFS and FS scores
 }
+\keyword{internal}

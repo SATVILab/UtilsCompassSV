@@ -5,10 +5,14 @@
 #'
 #' @inheritParams plot_compass
 #' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
+#' @param boxplot_width numeric. Width parameter for geom_boxplot.
+#' @param font_size numeric. Base font size for plots.
+#' @param line_width numeric. Width of lines in plots.
 #'
 #' @return A named list with names set to the names
 #' of \code{c_obj}, where each element is the corresponding
 #' boxplot of PFS and FS scores.
+#' @keywords internal
 .plot_compass_scores <- function(c_obj, plot_prob_fill, boxplot_width,
                                  plot_scores_lims_y,
                                  font_size,
@@ -54,7 +58,7 @@
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
-      coord_cartesian(y = y_lim_vec) +
+      coord_cartesian(ylim = y_lim_vec) +
       theme(legend.position = "none")
   }) %>%
     setNames(names(c_obj))
@@ -65,11 +69,15 @@
 #'
 #' @inheritParams plot_compass
 #' @param c_obj a named list of COMPASSResult objects. Provides data to plot.
+#' @param boxplot_width numeric. Width parameter for geom_boxplot.
+#' @param font_size numeric. Base font size for plots.
+#' @param line_width numeric. Width of lines in plots.
 #'
 #' @return A named list with names 'p_probs' and 'p_grid',
 #' corresponding to the list of ggplot2 plots of posterior plots
 #' and the heat map of the corresponding cytokine combination
 #' labels, respectively.
+#' @keywords internal
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
                              cyt_lab, boxplot_width, font_size, line_width,
@@ -124,7 +132,7 @@
   # ------------------------
 
   degree_lab_vec <- purrr::map_chr(combn_sel_vec, function(combn) {
-    nrow(stringr::str_locate_all(combn, "[[+]]")[[1]])
+    as.character(nrow(stringr::str_locate_all(combn, "[[+]]")[[1]]))
   }) %>%
     setNames(combn_sel_vec)
 

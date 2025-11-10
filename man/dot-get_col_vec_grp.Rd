@@ -21,8 +21,4 @@ and elements are colours for the groups
 \description{
 Get colours for groups for boxplots
 }
-\examples{
-.get_col_vec_grp(plot_prob_fill = "red", .grp = c("grp1", "grp2"))
-.get_col_vec_grp(plot_prob_fill = NULL, .grp = c("grp1", "grp2"))
-.get_col_vec_grp(plot_prob_fill = c("grp1" = "red", "grp2" = "orange"))
-}
+\keyword{internal}

@@ -34,13 +34,19 @@ plot_compass(
   width_grid = NULL,
   save_ind = FALSE,
   font_size = 14,
+  line_width = 0.5,
   height_ind = NULL,
   width_ind = NULL,
   plot_scores_lims_y = NULL,
-  font_size_labels = 14
+  font_size_labels = 14,
+  tile_colour = NULL,
+  tile_alpha = 1
 )
 }
 \arguments{
+\item{c_obj}{object of class "COMPASSResult", or a list of such objects. Provides
+COMPASS data to plot.}
+
 \item{dir_save}{character. Where to save the output. Default is working directory.}
 
 \item{type}{"pp" and/or "scores". Specifies response type(s) to plot.
@@ -54,7 +60,7 @@ If "scores" is included, then the PFS and FS responses are included. Note that, 
 
 \item{prob_min, quant_min}{[0,1]. Specify the minimum probability of a response for the minimum quantile
 of samples that a cytokine combination must have to be included. For example,
-if \code{prob_min == 0.5} and quant_min == {0.1}, then only cytokine combinations for which
+if \code{prob_min == 0.5} and \code{quant_min == 0.1}, then only cytokine combinations for which
 at least 10% of observations had a probability of a response of 0.5 or greater will plotted.
 Default is \code{0.8} and \code{0.25}.}
 
@@ -72,9 +78,9 @@ If \code{NULL}, then cytokines are ordered by their order in COMPASS output. Def
 
 \item{file_grid, file_ind}{character (vector).
 Names for grid plot and individual plots, respectively, to be saved as.
-If \\code{is.null(file)}, then the grid plot is
+If \code{is.null(file_grid)}, then the grid plot is
 simply named \code{compass_boxplots_grid}.
-If \\code{is.null(file_ind)}, then each element
+If \code{is.null(file_ind)}, then each element
 has its name taken from the corresponding list name in \code{c_obj}.
 If \code{file_ind} is named, then the names of \code{c_obj}
 are used to map onto elements of \code{file_ind}.}
@@ -128,6 +134,9 @@ group in \code{c_obj}. If \code{TRUE} only, then only a faceted version is saved
 If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)},
 then both the facted and individual plots are saved.}
 
+\item{n_col}{integer. Number of columns for the grid plot when \code{facet = TRUE}.
+If \code{NULL}, the number of columns is automatically determined. Default is \code{NULL}.}
+
 \item{cyt_lab}{function. A function that takes the cytokine names as input and returns the
 value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
 it is supplied when creating the grid plot to the \code{scale_y_continuous} function
@@ -145,6 +154,10 @@ Default is \code{TRUE}.}
 \item{save_ind}{logical. If \code{TRUE}, then plots for individual elements in \code{c_obj} are saved.
 Default is \code{FALSE}.}
 
+\item{font_size}{numeric. Base font size for plots. Default is \code{14}.}
+
+\item{line_width}{numeric. Width of lines in plots. Default is \code{0.5}.}
+
 \item{height_ind, width_ind}{numeric. Height and width, respectively, in centimetres of the saved figure (if saved),
 when saving individual elements in \code{c_obj}. If
 \code{NULL}, then appropriate values are guessed at and used. Default is \code{NULL}.}
@@ -152,6 +165,14 @@ when saving individual elements in \code{c_obj}. If
 \item{plot_scores_lims_y}{numeric vector of length 2.
 If not \code{NULL}, specifies the y-axis range for the scores plots.
 Default is \code{NULL}.}
+
+\item{font_size_labels}{numeric. Font size for plot labels. Default is \code{14}.}
+
+\item{tile_colour}{character. Colour to use for the tiles in the cytokine grid plot.
+If \code{NULL}, then no colour is used. Default is \code{NULL}.}
+
+\item{tile_alpha}{numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
+Default is \code{1} (no transparency, i.e. fully opaque).}
 }
 \value{
 A list, where each element is a \code{ggplot2} object.
@@ -160,9 +181,6 @@ A list, where each element is a \code{ggplot2} object.
 Plot COMPASS posterior probabilities as boxplots, and the PFS scores if desired.
 A grid of figures is created whenever multiple COMPASS objects are plotted simultaneous, with
 y-axis scales and cytokine combinations displayed fixed across plots.
-
-' @param c_obj object of class "COMPASSResult", or a list of such objects. Provides
-COMPASS data to plot.
 }
 \examples{
 library(UtilsCompassSV)
