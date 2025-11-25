@@ -67,7 +67,7 @@ test_that(".get_col_vec_grp_null handles single group", {
 })
 
 test_that(".get_col_vec_grp errors on unnamed non-character plot_prob_fill", {
-  # Tests line 25 - unnamed non-character plot_prob_fill
+  # Tests the type check for unnamed, non-character plot_prob_fill
   expect_error(
     UtilsCompassSV:::.get_col_vec_grp(
       plot_prob_fill = c(1, 2, 3),

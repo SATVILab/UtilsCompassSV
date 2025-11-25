@@ -1,3 +1,10 @@
+# Helper function to clean up test files
+cleanup_test_files <- function(files = c("compass_boxplots_grid.png")) {
+  for (x in files) {
+    invisible(suppressWarnings(file.remove(file.path(tempdir(), x))))
+  }
+}
+
 test_that("plot_compass works", {
   data("c_obj_list", package = "UtilsCompassSV")
   fn_vec <- c(
@@ -209,12 +216,6 @@ test_that("plot_compass errors on list with non-COMPASSResult elements", {
 
 test_that("plot_compass works with type as factor", {
   data("c_obj_list", package = "UtilsCompassSV")
-  fn_vec <- c("compass_boxplots_grid.png")
-  rm_fn <- function(.fn_vec = fn_vec) {
-    for (x in .fn_vec) {
-      invisible(suppressWarnings(file.remove(file.path(tempdir(), x))))
-    }
-  }
   # Test with type as factor
   plot_compass(
     c_obj_list[1],
@@ -223,17 +224,11 @@ test_that("plot_compass works with type as factor", {
     return_plot_list = FALSE
   )
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
-  rm_fn()
+  cleanup_test_files()
 })
 
 test_that("plot_compass auto-adds pp when not in type", {
   data("c_obj_list", package = "UtilsCompassSV")
-  fn_vec <- c("compass_boxplots_grid.png")
-  rm_fn <- function(.fn_vec = fn_vec) {
-    for (x in .fn_vec) {
-      invisible(suppressWarnings(file.remove(file.path(tempdir(), x))))
-    }
-  }
   # Type "scores" alone should still work because pp is auto-added
   plot_compass(
     c_obj_list[1],
@@ -242,17 +237,11 @@ test_that("plot_compass auto-adds pp when not in type", {
     return_plot_list = FALSE
   )
   expect_true(file.exists(file.path(tempdir(), "compass_boxplots_grid.png")))
-  rm_fn()
+  cleanup_test_files()
 })
 
 test_that("plot_compass returns plot list when return_plot_list is TRUE", {
   data("c_obj_list", package = "UtilsCompassSV")
-  fn_vec <- c("compass_boxplots_grid.png")
-  rm_fn <- function(.fn_vec = fn_vec) {
-    for (x in .fn_vec) {
-      invisible(suppressWarnings(file.remove(file.path(tempdir(), x))))
-    }
-  }
   result <- plot_compass(
     c_obj_list[1],
     dir_save = tempdir(),
@@ -263,17 +252,11 @@ test_that("plot_compass returns plot list when return_plot_list is TRUE", {
   expect_true("p_grid" %in% names(result))
   expect_true("p_probs" %in% names(result))
   expect_true("p_scores" %in% names(result))
-  rm_fn()
+  cleanup_test_files()
 })
 
 test_that("plot_compass assigns names to unnamed list", {
   data("c_obj_list", package = "UtilsCompassSV")
-  fn_vec <- c("compass_boxplots_grid.png")
-  rm_fn <- function(.fn_vec = fn_vec) {
-    for (x in .fn_vec) {
-      invisible(suppressWarnings(file.remove(file.path(tempdir(), x))))
-    }
-  }
   # Create unnamed list
   unnamed_list <- unname(c_obj_list[1:2])
   result <- plot_compass(
@@ -285,5 +268,5 @@ test_that("plot_compass assigns names to unnamed list", {
   # Should have auto-generated names
   expect_true("grp1" %in% names(result$p_probs))
   expect_true("grp2" %in% names(result$p_probs))
-  rm_fn()
+  cleanup_test_files()
 })
