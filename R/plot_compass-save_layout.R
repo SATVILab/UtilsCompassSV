@@ -147,7 +147,7 @@
           "compass_boxplots-",
           switch(as.character(is.null(names(p_list_pp$p_probs))),
             "TRUE" = i,
-            "FALSE" = names(p_list_pp$p_probs)[i] %>%
+            "FALSE" = names(p_list_pp$p_probs)[i] |>
               stringr::str_replace_all("/", "_")
           )
         )

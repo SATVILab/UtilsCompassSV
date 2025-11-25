@@ -25,7 +25,6 @@
 #' @examples
 #' convert_cyt_combn_format(c("IFNg&!IL2"), to = "std")
 #' convert_cyt_combn_format(c("IFNg+IL2-"), to = "compass")
-#' @importFrom magrittr %>% %<>%
 convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALSE,
                                      check = TRUE, lab = NULL) {
 
@@ -97,8 +96,8 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
         }
         if (!is.null(lab)) elem <- lab[elem]
         paste0(elem, "+")
-      }) %>%
-        unlist() %>%
+      }) |>
+        unlist() |>
         paste0(collapse = "")
     })
 
@@ -112,7 +111,7 @@ convert_cyt_combn_format <- function(cyt_combn, to, force = FALSE, silent = FALS
           stop("At least one cytokine is a character of length zero after conversion.")
         }
         len - 1
-      }) %>%
+      }) |>
         unique()
       if (length(n_cyt) != 1) {
         stop(paste0("intended output has differing numbers of cytokines in for each cytokine combination."),

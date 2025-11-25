@@ -32,9 +32,9 @@
 response_prob <- function(c_obj, exc = NULL) {
   prob_mat <- c_obj$fit$mean_gamma
   sampleid_vec <- rownames(prob_mat)
-  prob_tbl <- prob_mat %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(sampleid = sampleid_vec) %>%
+  prob_tbl <- prob_mat |>
+    tibble::as_tibble() |>
+    dplyr::mutate(sampleid = sampleid_vec) |>
     dplyr::select(sampleid, everything())
   cyt_vec <- stringr::str_split(
     colnames(prob_tbl)[2],
@@ -79,7 +79,7 @@ response_prob <- function(c_obj, exc = NULL) {
       }
       match_ind <- purrr::map_lgl(cn_vec, function(cn) {
         stringr::str_detect(cn, x)
-      }) %>%
+      }) |>
         any()
       if (!match_ind) {
         stop(paste0(x, " is in exc but not in cyt combns of COMPASS object"),
@@ -106,19 +106,19 @@ response_prob <- function(c_obj, exc = NULL) {
     }
   }
 
-  prob_tbl %>%
+  prob_tbl |>
     tidyr::pivot_longer(
       -sampleid,
       names_to = "cyt_combn",
       values_to = "prob"
-    ) %>%
+    ) |>
     dplyr::filter(
       !stringr::str_detect(
         cyt_combn,
         all_neg_cyt_combn
       )
-    ) %>%
-    dplyr::group_by(sampleid) %>%
+    ) |>
+    dplyr::group_by(sampleid) |>
     dplyr::summarise(
       prob = 1 - prod(1 - prob),
       .groups = "drop"
