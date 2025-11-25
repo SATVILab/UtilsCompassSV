@@ -64,7 +64,7 @@ plot_compass(
   shift_plot_scores = c(-0.05, 0.05),
   shift_plot_pp_y = -0.075,
   shift_plot_heatmap_x = 0.034,
-  plot_prob_fill = c("red", "blue", "green", "purple"),
+  plot_prob_fill = c("skyblue", "forestgreen", "mediumvioletred", "darkorange"),
   tile_fill = RColorBrewer::brewer.pal(n = 11, name = "Spectral")[2:4] |> rev()
 )
 knitr::include_graphics('data-raw/compass_boxplots_grid_custom_colours.png')
