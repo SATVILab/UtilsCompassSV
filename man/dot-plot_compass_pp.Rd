@@ -18,7 +18,8 @@
   font_size,
   line_width,
   tile_colour,
-  tile_alpha
+  tile_alpha,
+  tile_fill
 )
 }
 \arguments{
@@ -50,7 +51,7 @@ If \code{FALSE} only, then plots are saved individually. If \code{c(TRUE, FALSE)
 then both the facted and individual plots are saved.}
 
 \item{cyt_lab}{function. A function that takes the cytokine names as input and returns the
-value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
+value desired to be plotted al   ong the y-axis of the grid plot. If not \code{NULL}, then
 it is supplied when creating the grid plot to the \code{scale_y_continuous} function
 via the \code{labels} parameter. For example, if we have two cytokines, \code{"IFNg"} and
 \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
@@ -68,6 +69,11 @@ If \code{NULL}, then no colour is used. Default is \code{NULL}.}
 
 \item{tile_alpha}{numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
 Default is \code{1} (no transparency, i.e. fully opaque).}
+
+\item{tile_fill}{character vector. Fill colours to use for the tiles in the cytokine grid plot.
+Corresponds to the number of cytokines expressed in a combination.
+Earlier elements in the vector are used for cytokine combinations with fewer cytokines expressed.
+If \code{NULL}, the number of columns is automatically determined. Default is \code{NULL}.}
 }
 \value{
 A named list with names 'p_probs' and 'p_grid',

@@ -53,14 +53,21 @@
   shift_label_x <- width_region * shift_label[1]
   shift_label_y <- height_region * shift_label[2]
 
-  if (!ind) p <- cowplot::ggdraw()
+  p_base <- ggplot() +
+    theme_void() +
+    theme(
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+
+  if (!ind) p <- cowplot::ggdraw(plot = p_base)
 
   if (ind) j <- 1 # allow looping when ind without changing grid location
   for (i in seq_along(p_list_pp$p_probs)) {
     if (!ind) j <- i
 
     if (ind) {
-      p <- cowplot::ggdraw()
+      p <- cowplot::ggdraw(plot = p_base)
     }
 
     # overall location in grid
@@ -198,14 +205,19 @@
     width <- ifelse(n_col == 1, 29.4 / 2, 29.4)
   }
   if (!dir.exists(dir_save)) dir.create(dir_save, recursive = TRUE)
-  cowplot::ggsave2(
-    filename = file.path(
+  path_save <- file.path(
       dir_save,
       paste0(
         ifelse(is.null(file), "compass_boxplots_grid", file),
         ".", save_format
       )
-    ),
+    )
+  path_save <- gsub("\\.png\\.png$", ".png", path_save)
+  path_save <- gsub("\\.pdf\\.pdf$", ".pdf", path_save)
+  path_save <- gsub("\\.pdf\\.png$", ".pdf", path_save)
+  path_save <- gsub("\\.png\\.pdf$", ".png", path_save)
+  cowplot::ggsave2(
+    filename = path_save,
     plot = p,
     units = "cm",
     width = width,

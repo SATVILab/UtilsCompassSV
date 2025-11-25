@@ -70,7 +70,7 @@
 #' are the plots of the PFS and FS responses for each group. The \code{"p_scores"} element is only supplied if \code{"scores"} is
 #' in \code{"type"}.
 #' @param cyt_lab function. A function that takes the cytokine names as input and returns the
-#' value desired to be plotted along the y-axis of the grid plot. If not \code{NULL}, then
+#' value desired to be plotted al   ong the y-axis of the grid plot. If not \code{NULL}, then
 #' it is supplied when creating the grid plot to the \code{scale_y_continuous} function
 #' via the \code{labels} parameter. For example, if we have two cytokines, \code{"IFNg"} and
 #' \code{"TNF"}, but we want to display \code{"IFNg"} with the Greek gamma symbol, then we can
@@ -99,6 +99,9 @@
 #' @param tile_alpha numeric in \code{[0,1]}. Transparency level to use for the tiles in the cytokine grid plot.
 #' Default is \code{1} (no transparency, i.e. fully opaque).
 #' @param n_col integer. Number of columns for the grid plot when \code{facet = TRUE}.
+#' @param tile_fill character vector. Fill colours to use for the tiles in the cytokine grid plot.
+#' Corresponds to the number of cytokines expressed in a combination.
+#' Earlier elements in the vector are used for cytokine combinations with fewer cytokines expressed.
 #' If \code{NULL}, the number of columns is automatically determined. Default is \code{NULL}.
 #' @param font_size numeric. Base font size for plots. Default is \code{14}.
 #' @param line_width numeric. Width of lines in plots. Default is \code{0.5}.
@@ -172,7 +175,8 @@ plot_compass <- function(c_obj,
                          plot_scores_lims_y = NULL,
                          font_size_labels = 14,
                          tile_colour = NULL,
-                         tile_alpha = 1) {
+                         tile_alpha = 1,
+                         tile_fill = NULL) {
 
   # prep
   # -------------------
@@ -221,7 +225,7 @@ plot_compass <- function(c_obj,
       boxplot_width = boxplot_width_pp,
       plot_prob_fill = plot_prob_fill, facet = facet,
       cyt_lab = cyt_lab, font_size = font_size, line_width = line_width,
-      tile_colour = tile_colour, tile_alpha = tile_alpha
+      tile_colour = tile_colour, tile_alpha = tile_alpha, tile_fill = tile_fill
     )
   }
 

@@ -1,7 +1,7 @@
 Package: UtilsCompassSV
 Type: Package
 Title: Utility Functions to Plot and Work with COMPASS Output
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: person(given = c("Miguel", "Julio"),
                   family = "Rodo",
                   role = c("aut", "cre"),

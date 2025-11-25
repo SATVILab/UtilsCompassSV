@@ -49,6 +49,27 @@ knitr::include_graphics('data-raw/compass_boxplots_grid.png')
 
 <img src="data-raw/compass_boxplots_grid.png" width="100%" />
 
+Colours of boxplots and tiles in the cytokine grid plot can be
+customized.
+
+``` r
+plot_compass(
+  c_obj = c_obj_list,
+  dir_save = here::here('data-raw'),
+  file_grid = "compass_boxplots_grid_custom_colours",
+  type = c('pp', 'scores'),
+  return_plot_list = FALSE,
+  shift_plot_scores = c(-0.05, 0.05),
+  shift_plot_pp_y = -0.075,
+  shift_plot_heatmap_x = 0.034,
+  plot_prob_fill = c("red", "blue", "green", "purple"),
+  tile_fill = RColorBrewer::brewer.pal(n = 6, name = "Spectral")
+)
+knitr::include_graphics('data-raw/compass_boxplots_grid_custom_colours.png')
+```
+
+<img src="data-raw/compass_boxplots_grid_custom_colours.png" width="100%" />
+
 ### Utilities
 
 Convert cytokine combination formats between standard “+/-” format and
@@ -82,11 +103,11 @@ response_prob(c_obj = c_obj_list[[4]]) %>%
   pander::pandoc.table()
 ```
 
-|   sampleid   |  prob  |
-|:------------:|:------:|
-|  010673\_D0  | 0.076  |
-|  010782\_D0  | 0.4405 |
-| 010782\_D720 | 0.903  |
-|  010978\_D0  |   1    |
-|  010993\_D0  | 0.8039 |
-|  020185\_D0  |   0    |
+|  sampleid   |  prob  |
+|:-----------:|:------:|
+|  010673_D0  | 0.076  |
+|  010782_D0  | 0.4405 |
+| 010782_D720 | 0.903  |
+|  010978_D0  |   1    |
+|  010993_D0  | 0.8039 |
+|  020185_D0  |   0    |

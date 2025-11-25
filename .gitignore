@@ -2,7 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+Rplots.pdf
 tests/testthat/Rplots.pdf
 tests/testthat/*.pdf
 *.tar.gz
 *.Rcheck/
+_tmp/**/*
+_tmp/*

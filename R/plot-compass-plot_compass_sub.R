@@ -50,11 +50,20 @@
         dplyr::filter(.grp == .grp_curr),
       aes(x = score_type, y = score, fill = .grp)
     ) +
-      geom_boxplot(
-        outlier.size = 0.25, outlier.colour = "gray50",
-        width = boxplot_width, linewidth = line_width
-      ) +
+      {
+        box_args <- list(
+          outlier.size = 0.25,
+          outlier.colour = "gray50",
+          linewidth = line_width
+        )
+        if (!is.null(boxplot_width)) box_args$width <- boxplot_width
+        do.call(ggplot2::geom_boxplot, box_args)
+      } +
       cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
+      theme(
+        plot.background = element_rect(fill = "white", color = NA),
+        panel.background = element_rect(fill = "white", color = NA)
+      ) +
       cowplot::background_grid() +
       labs(x = "Score type", y = "Score") +
       scale_fill_manual(values = col_vec_grp) +
@@ -81,7 +90,7 @@
 .plot_compass_pp <- function(c_obj, dir_save, prob_min, quant_min,
                              silent, cyt_order, plot_prob_fill, facet,
                              cyt_lab, boxplot_width, font_size, line_width,
-                             tile_colour, tile_alpha) {
+                             tile_colour, tile_alpha, tile_fill) {
   pp_tbl <- purrr::map_df(seq_along(c_obj), function(i) {
     x <- c_obj[[i]]
     pp_mat <- x$fit$mean_gamma
@@ -196,18 +205,30 @@
   # --------------------
 
   # grid
-  col_vec <- RColorBrewer::brewer.pal(
-    n = length(cyt_order) + 2,
-    name = "YlOrBr"
-  )
-  col_vec <- col_vec[-c(1, length(cyt_order))]
+  if (!is.null(tile_fill)) {
+    if (length(tile_fill) == 1L) {
+      col_vec <- rep(tile_fill, length(cyt_order))
+    } else if (length(tile_fill) < length(cyt_order)) {
+      col_vec <- rep(tile_fill, length.out = length(cyt_order))
+    } else {
+      col_vec <- tile_fill[seq(1, length(cyt_order))]
+    }
+  } else {
+    col_vec <- RColorBrewer::brewer.pal(
+      n = length(cyt_order) + 2,
+      name = "YlOrBr"
+    )
+    col_vec <- col_vec[-c(1, length(cyt_order))]
+  }
   expr_degree_lab_vec <- setNames(col_vec, paste0("TRUE", 1:length(col_vec)))
   expr_degree_lab_vec <- c(expr_degree_lab_vec, setNames(
     rep("white", length(col_vec)),
     paste0("FALSE", 1:length(col_vec))
   ))
 
-  col_vec_grp <- .get_col_vec_grp(plot_prob_fill = plot_prob_fill, .grp = names(c_obj))
+  col_vec_grp <- .get_col_vec_grp(
+    plot_prob_fill = plot_prob_fill, .grp = names(c_obj)
+  )
 
   # grid
   p_grid <- ggplot(
@@ -219,6 +240,10 @@
     )
   ) +
     cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
+    theme(
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA)
+    ) +
     # geom_raster(col = 'black', linetype = 'solid') +
     scale_fill_manual(values = expr_degree_lab_vec) +
     theme(legend.position = "none") +
@@ -254,11 +279,20 @@
       aes(x = combn, y = prob, fill = .grp)
     ) +
       cowplot::theme_cowplot(font_size = font_size, line_size = line_width) +
-      cowplot::background_grid(major = "y") +
-      geom_boxplot(
-        outlier.size = 0.25, outlier.colour = "gray50",
-        width = boxplot_width, linewidth = line_width
+      theme(
+        plot.background = element_rect(fill = "white", color = NA),
+        panel.background = element_rect(fill = "white", color = NA)
       ) +
+      cowplot::background_grid(major = "y") +
+      {
+        box_args <- list(
+          outlier.size = 0.25,
+          outlier.colour = "gray50",
+          linewidth = line_width
+        )
+        if (!is.null(boxplot_width)) box_args$width <- boxplot_width
+        do.call(ggplot2::geom_boxplot, box_args)
+      } +
       scale_fill_manual(values = col_vec_grp) +
       lims(y = c(0, 1)) +
       theme(
