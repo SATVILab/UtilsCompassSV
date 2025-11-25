@@ -26,9 +26,9 @@
     tibble::tibble(
       .id = names(pfs_vec), .grp = names(c_obj)[i],
       PFS = pfs_vec
-    ) %>%
+    ) |>
       dplyr::mutate(FS = fs_vec[.id])
-  }) %>%
+  }) |>
     tidyr::pivot_longer(-c(.id, .grp),
       names_to = "score_type",
       values_to = "score"
@@ -46,7 +46,7 @@
 
   purrr::map(names(c_obj), function(.grp_curr) {
     ggplot(
-      score_tbl %>%
+      score_tbl |>
         dplyr::filter(.grp == .grp_curr),
       aes(x = score_type, y = score, fill = .grp)
     ) +
@@ -69,7 +69,7 @@
       scale_fill_manual(values = col_vec_grp) +
       coord_cartesian(ylim = y_lim_vec) +
       theme(legend.position = "none")
-  }) %>%
+  }) |>
     setNames(names(c_obj))
 }
 
@@ -101,25 +101,25 @@
     pp_tbl <- tibble::as_tibble(pp_mat)
     id_var <- x$data$individual_id
     pp_tbl[[".id"]] <- x$data$meta[[id_var]]
-    pp_tbl <- pp_tbl[, ".id"] %>%
+    pp_tbl <- pp_tbl[, ".id"] |>
       dplyr::bind_cols(pp_tbl[, !(colnames(pp_tbl) == ".id")])
-    pp_tbl %>%
+    pp_tbl |>
       tidyr::pivot_longer(-.id,
         names_to = "combn",
         values_to = "prob"
-      ) %>%
+      ) |>
       dplyr::mutate(.grp = names(c_obj)[i])
-  }) %>%
+  }) |>
     dplyr::mutate(.grp = factor(.data$.grp, levels = names(c_obj)))
 
 
   # filter out low-response cytokine combinations
   # ----------------------
-  combn_sel_vec <- pp_tbl %>%
-    dplyr::filter(stringr::str_detect(combn, "[[+]]")) %>%
-    dplyr::group_by(combn, .grp) %>%
-    dplyr::filter(quantile(prob, prob_min) >= quant_min) %>%
-    magrittr::extract2("combn") %>%
+  combn_sel_vec <- pp_tbl |>
+    dplyr::filter(stringr::str_detect(combn, "[[+]]")) |>
+    dplyr::group_by(combn, .grp) |>
+    dplyr::filter(quantile(prob, prob_min) >= quant_min) |>
+    dplyr::pull("combn") |>
     unique()
 
   if (length(combn_sel_vec) == 0) {
@@ -130,7 +130,7 @@
     }
     return(switch(as.character(return_plot),
       "TRUE" = switch(as.character(init_list),
-        "TRUE" = purrr::map(c_obj, function(x) ggplot()) %>%
+        "TRUE" = purrr::map(c_obj, function(x) ggplot()) |>
           setNames(init_name_vec)
       ),
       "FALSE" = invisible(TRUE)
@@ -142,27 +142,27 @@
 
   degree_lab_vec <- purrr::map_chr(combn_sel_vec, function(combn) {
     as.character(nrow(stringr::str_locate_all(combn, "[[+]]")[[1]]))
-  }) %>%
+  }) |>
     setNames(combn_sel_vec)
 
-  pp_tbl %<>%
-    dplyr::filter(combn %in% combn_sel_vec) %>%
+  pp_tbl <- pp_tbl |>
+    dplyr::filter(combn %in% combn_sel_vec) |>
     dplyr::mutate(degree = degree_lab_vec[combn])
 
   # order cyt combns within each degree by post probs
   # -------------------------
-  combn_factor_levels_vec <- pp_tbl %>%
-    dplyr::group_by(degree, combn, .grp) %>%
-    dplyr::summarise(quant = quantile(prob, 0.75), .groups = "drop") %>%
-    dplyr::group_by(degree, combn) %>%
-    dplyr::filter(quant == max(quant)) %>%
-    dplyr::slice(1) %>%
-    dplyr::group_by(degree) %>%
-    dplyr::arrange(quant, .by_group = TRUE) %>%
-    dplyr::ungroup() %>%
-    magrittr::extract2("combn")
+  combn_factor_levels_vec <- pp_tbl |>
+    dplyr::group_by(degree, combn, .grp) |>
+    dplyr::summarise(quant = quantile(prob, 0.75), .groups = "drop") |>
+    dplyr::group_by(degree, combn) |>
+    dplyr::filter(quant == max(quant)) |>
+    dplyr::slice(1) |>
+    dplyr::group_by(degree) |>
+    dplyr::arrange(quant, .by_group = TRUE) |>
+    dplyr::ungroup() |>
+    dplyr::pull("combn")
 
-  pp_tbl %<>%
+  pp_tbl <- pp_tbl |>
     dplyr::mutate(combn = factor(.data$combn, levels = combn_factor_levels_vec))
 
   # create grid tbl
@@ -182,21 +182,21 @@
   }
 
   # create base table for grid
-  grid_tbl <- pp_tbl %>%
-    dplyr::select(combn, degree) %>%
-    dplyr::group_by(combn, degree) %>%
-    dplyr::slice(1) %>%
+  grid_tbl <- pp_tbl |>
+    dplyr::select(combn, degree) |>
+    dplyr::group_by(combn, degree) |>
+    dplyr::slice(1) |>
     dplyr::ungroup()
 
   for (cyt in cyt_order) {
     grid_tbl[[cyt]] <- as.character(stringr::str_detect(grid_tbl$combn, paste0(cyt, "[[+]]")))
   }
 
-  grid_tbl %<>%
+  grid_tbl <- grid_tbl |>
     tidyr::pivot_longer(-c(combn, degree),
       names_to = "cyt",
       values_to = "expressed"
-    ) %>%
+    ) |>
     dplyr::mutate(cyt = factor(.data$cyt,
       levels = cyt_order
     ))
@@ -232,7 +232,7 @@
 
   # grid
   p_grid <- ggplot(
-    grid_tbl %>%
+    grid_tbl |>
       dplyr::mutate(expr_degree = paste0(expressed, degree)),
     aes(
       x = combn, y = cyt,
@@ -274,7 +274,7 @@
   p_probs <- purrr::map(seq_along(c_obj), function(i) {
     grp_curr <- names(c_obj)[i]
     p <- ggplot(
-      pp_tbl %>%
+      pp_tbl |>
         dplyr::filter(.grp == grp_curr),
       aes(x = combn, y = prob, fill = .grp)
     ) +
@@ -307,7 +307,7 @@
       )
     if (facet) p <- p + facet_wrap(~.grp)
     p
-  }) %>%
+  }) |>
     setNames(names(c_obj))
 
   list("p_grid" = p_grid, "p_probs" = p_probs)

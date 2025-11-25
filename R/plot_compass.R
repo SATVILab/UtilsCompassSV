@@ -208,7 +208,7 @@ plot_compass <- function(c_obj,
     if (length(c_obj) == 0) stop("no data in c_obj")
     all_compass_obj <- purrr::map_lgl(c_obj, function(x) {
       identical(class(x), "COMPASSResult")
-    }) %>%
+    }) |>
       all()
     if (!all_compass_obj) {
       stop("not all elements in c_obj list have class COMPASSResult")
@@ -287,7 +287,7 @@ plot_compass <- function(c_obj,
     return(invisible(TRUE))
   }
 
-  p_list_pp %>%
+  p_list_pp |>
     append(
       switch(as.character(scores_ind),
         "TRUE" = list("p_scores" = p_list_scores),
