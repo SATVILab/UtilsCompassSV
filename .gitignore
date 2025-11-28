@@ -9,3 +9,5 @@ tests/testthat/*.pdf
 *.Rcheck/
 _tmp/**/*
 _tmp/*
+docs
+inst/doc

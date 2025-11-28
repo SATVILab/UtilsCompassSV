@@ -1,0 +1,142 @@
+---
+title: "Getting Started with UtilsCompassSV"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with UtilsCompassSV}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+```{r setup}
+library(UtilsCompassSV)
+```
+
+## Introduction
+
+UtilsCompassSV provides utility functions for plotting and working with COMPASS (Combinatorial Polyfunctionality Analysis of Single Cells) output. The primary function is `plot_compass`, which creates concise visualizations of posterior probabilities for cytokine combinations.
+
+## Available Data
+
+The package includes sample COMPASS result objects for demonstration:
+
+- `c_obj`: A single COMPASSResult object
+- `c_obj_list`: A named list of COMPASSResult objects
+
+```{r load-data}
+data("c_obj", package = "UtilsCompassSV")
+data("c_obj_list", package = "UtilsCompassSV")
+```
+
+## Main Functions
+
+### plot_compass
+
+The `plot_compass` function creates visualizations of COMPASS posterior probabilities as boxplots, with optional PFS (Polyfunctionality Score) plots.
+
+```{r plot-compass-example, eval=FALSE}
+# Basic usage with a list of COMPASS objects
+plot_compass(
+  c_obj = c_obj_list,
+  type = c("pp", "scores"),
+  return_plot_list = FALSE,
+  shift_plot_scores = c(-0.05, 0.05),
+  shift_plot_pp_y = -0.075,
+  shift_plot_heatmap_x = 0.052
+)
+```
+The plot will be saved to the working directory as a PNG file by default.
+
+Key parameters:
+
+- `c_obj`: A COMPASSResult object or a list of such objects
+- `type`: What to plot - `"pp"` for posterior probabilities, `"scores"` for PFS/FS scores
+- `prob_min`, `quant_min`: Filter cytokine combinations by minimum probability threshold
+- `save_format`: Output format (`"png"` or `"pdf"`)
+
+### convert_cyt_combn_format
+
+Convert cytokine combination notation between COMPASS format and standard +/- format:
+
+```{r convert-format-example}
+# Convert from COMPASS format to standard format
+convert_cyt_combn_format(c("IFNg&!IL2&TNF"), to = "std")
+
+# Convert from standard format to COMPASS format
+convert_cyt_combn_format(c("IFNg+IL2-TNF+"), to = "compass")
+```
+
+Format descriptions:
+
+- **Standard format**: `IFNg+IL2-TNF+` (+ for positive, - for negative)
+- **COMPASS format**: `IFNg&!IL2&TNF` (& as separator, ! for negation)
+
+### response_prob
+
+Calculate the overall probability of responding to at least one cytokine combination:
+
+```{r response-prob-example}
+# Calculate response probability
+response_prob(c_obj = c_obj)
+
+# Exclude specific cytokine combinations
+response_prob(
+  c_obj = c_obj,
+  exc = c("IFNg&IL2&TNF&!IL17&!IL6&!IL22")
+)
+```
+
+## Customizing Plots
+
+### Using Greek Symbols for Cytokines
+
+You can customize cytokine labels to use Greek symbols:
+```{r greek-labels, eval=FALSE}
+get_cyt_lab <- function(cyt) {
+  lapply(cyt, function(cyt_ind) {
+    switch(cyt_ind,
+      "IFNg" = bquote("IFN" ~ gamma),
+      cyt_ind
+    )
+  })
+}
+
+plot_compass(
+  c_obj_list[1],
+  type = "pp",
+  cyt_lab = get_cyt_lab
+)
+```
+
+### Saving Options
+
+Control how and where plots are saved:
+
+```{r save-options, eval=FALSE}
+plot_compass(
+  c_obj = c_obj_list,
+  save = TRUE,
+  save_format = "pdf",
+  save_grid = TRUE,
+  save_ind = FALSE,
+  dir_save = tempdir(),
+  file_grid = "my_compass_plot"
+)
+```
+
+## Further Information
+
+For more details on individual functions, see their help pages:
+
+- `?plot_compass`
+- `?convert_cyt_combn_format`
+- `?response_prob`
+```
