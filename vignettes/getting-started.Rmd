@@ -53,7 +53,7 @@ plot_compass(
   shift_plot_heatmap_x = 0.052
 )
 ```
-The plot will be saved to the working directory as a PNG file by default.
+The plot will be saved to the working directory as a PNG file (by default, `save = TRUE` and `save_format = "png"`).
 
 Key parameters:
 
@@ -139,4 +139,3 @@ For more details on individual functions, see their help pages:
 - `?plot_compass`
 - `?convert_cyt_combn_format`
 - `?response_prob`
-```
