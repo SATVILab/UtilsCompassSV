@@ -45,6 +45,18 @@ devtools::document()
 - The package uses `R-CMD-check` workflow which runs on push/PR to main/master branches
 - Tests run on multiple OS (macOS, Windows, Ubuntu) and R versions (devel, release, oldrel-1)
 - All commits must pass R CMD check before merging
+- The `pkgdown.yaml` workflow builds and deploys the package website to GitHub Pages
+
+### pkgdown Website
+The package uses pkgdown for its documentation website at https://satvilab.github.io/UtilsCompassSV/
+
+```r
+# Build the pkgdown site locally
+pkgdown::build_site()
+
+# Preview the site
+pkgdown::preview_site()
+```
 
 ## Code Standards
 
@@ -103,6 +115,47 @@ devtools::document()
 - The package uses lazy data loading (`LazyData: true`), so data objects are loaded on demand
 - Minimum R version requirement: R >= 2.10
 - RoxygenNote version: 7.1.2
+
+## pkgdown Reference Maintenance
+
+**CRITICAL**: When adding, removing, or modifying exported functions or data objects, the pkgdown reference section in `_pkgdown.yml` MUST be updated to reflect these changes.
+
+### When to Update `_pkgdown.yml`
+
+1. **Adding a new exported function**: Add the function name to the appropriate section in the `reference:` block
+2. **Removing an exported function**: Remove the function name from the `reference:` block
+3. **Changing function exports**: If a function is newly exported or unexported via `@export`, update accordingly
+4. **Adding new data objects**: Add the data object name to the "Data" section
+5. **Reorganizing function categories**: Update section titles and contents as needed
+
+### Structure of `_pkgdown.yml` Reference Section
+
+```yaml
+reference:
+- title: Main Functions
+  desc: Primary functions for working with COMPASS output
+  contents:
+  - function_name_1
+  - function_name_2
+
+- title: Helper Functions
+  desc: Supporting functions
+  contents:
+  - helper_function_1
+
+- title: Data
+  desc: Sample data objects
+  contents:
+  - data_object_1
+```
+
+### Verification Steps
+
+After making changes to exports:
+1. Run `devtools::document()` to update NAMESPACE
+2. Update `_pkgdown.yml` reference section if needed
+3. Run `pkgdown::build_site()` locally to verify the site builds correctly
+4. Check that all exported functions appear in the reference section
 
 ## Testing Best Practices
 

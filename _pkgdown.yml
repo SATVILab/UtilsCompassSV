@@ -1,0 +1,23 @@
+url: https://satvilab.github.io/UtilsCompassSV/
+template:
+  bootstrap: 5
+
+reference:
+- title: Main Functions
+  desc: Primary functions for working with COMPASS output
+  contents:
+  - plot_compass
+  - convert_cyt_combn_format
+  - response_prob
+
+- title: Helper Functions
+  desc: Supporting functions for plotting and layout
+  contents:
+  - .save_layout
+
+- title: Data
+  desc: Sample data objects
+  contents:
+  - c_obj
+  - c_obj_list
+
